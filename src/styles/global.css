@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Variables de tema para Rastreo Industrial */
+@theme {
+  /* Colores primarios de la marca */
+  --color-purpura: #3A1C71;
+  --color-azul: #0277BD;
+  --color-azul-celeste: #00B0FF;
+  --color-coral: #FF9E80;
+  
+  /* Variaciones del Púrpura Profundo */
+  --color-purpura-50: #eeeaf5;
+  --color-purpura-100: #d5caeb;
+  --color-purpura-200: #b9a6dc;
+  --color-purpura-300: #9c81ce;
+  --color-purpura-400: #8257bd;
+  --color-purpura-500: #664aa7;
+  --color-purpura-600: #533a8c;
+  --color-purpura-700: #442e73;
+  --color-purpura-800: #3A1C71;
+  --color-purpura-900: #2a1453;
+  
+  /* Variaciones del Azul Industrial */
+  --color-azul-50: #e1f2fd;
+  --color-azul-100: #b8e0fa;
+  --color-azul-200: #8acdf7;
+  --color-azul-300: #5cb9f3;
+  --color-azul-400: #2aa6f0;
+  --color-azul-500: #0e8dde;
+  --color-azul-600: #0277BD;
+  --color-azul-700: #01639e;
+  --color-azul-800: #014e7f;
+  --color-azul-900: #003a60;
+  
+  /* Variaciones del Azul Celeste */
+  --color-azul-celeste-50: #e3f6ff;
+  --color-azul-celeste-100: #b9e9ff;
+  --color-azul-celeste-200: #8ddbff;
+  --color-azul-celeste-300: #5ccdff;
+  --color-azul-celeste-400: #2ec0ff;
+  --color-azul-celeste-500: #00B0FF;
+  --color-azul-celeste-600: #0090d0;
+  --color-azul-celeste-700: #0071a3;
+  --color-azul-celeste-800: #005176;
+  --color-azul-celeste-900: #00314a;
+  
+  /* Variaciones del Coral Claro */
+  --color-coral-50: #fff5f2;
+  --color-coral-100: #ffebe5;
+  --color-coral-200: #ffd6c9;
+  --color-coral-300: #ffc2ad;
+  --color-coral-400: #ffad91;
+  --color-coral-500: #FF9E80;
+  --color-coral-600: #ff7f56;
+  --color-coral-700: #ff612d;
+  --color-coral-800: #ff4303;
+  --color-coral-900: #d93500;
+  
+  /* Colores de estado */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  
+  /* Fuentes */
+  --font-sans: 'Roboto', system-ui, sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+  --font-logo: 'Montserrat Black', sans-serif;
+  
+  /* Pesos de fuente */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+}
+
+/* Estilos globales adicionales */
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+  }
+  h3, h4 {
+    font-weight: var(--font-weight-medium);
+  }
+}
+
+/* Utilidades personalizadas */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(90deg, var(--color-purpura), var(--color-azul));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .slogan {
+    font-family: 'Montserrat';
+    font-weight: var(--font-weight-medium);
+    font-style: italic;
+  }
+}

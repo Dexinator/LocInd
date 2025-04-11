@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    
+  # Servicio para desarrollo (descomentar si lo necesitas)
+  # dev:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: build-deps
+  #   command: pnpm run dev
+  #   ports:
+  #     - "4321:4321"
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   environment:
+  #     - HOST=0.0.0.0
+  #     - PORT=4321
+   

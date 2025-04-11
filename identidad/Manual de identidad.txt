@@ -1,0 +1,98 @@
+Manual de Identidad de Marca
+Identidad de Marca Rastreo Industrial
+Los elementos de identidad sirven para reflejar lo que es una marca, al mismo tiempo que sirven de
+diferenciación para permitir al consumidor identificar con mayor rapidez los productos y servicios que
+ésta ofrece. Desde el punto de vista de las empresas, permite diferenciarse de la competencia y ayuda a
+establecer una posición determinada en la mente de sus consumidores (actuales y potenciales).
+El presente manual tiene como finalidad reunir los elementos de identidad gráfica de Rastreo Industrial y
+la gama de aplicaciones de uso más generalizado.
+La denominación, tipografía y los colores corporativos serán de utilización exclusiva para todos los
+documentos que se editen, no estando permitida su utilización en versiones y formatos distintos a los
+que se especifican en los apartados correspondientes de este manual.
+Las normas contenidas en este documento deben respetarse y mantenerse constantes, todo lo anterior
+con la finalidad de facilitar una difusión única, además de reforzar y asentar con toda claridad su aspecto
+comercial.
+Slogan
+"Precisión que transforma la industria"
+El slogan refleja el compromiso de Rastreo Industrial con la exactitud y fiabilidad en sus servicios de
+seguimiento y control industrial, enfatizando el impacto positivo que esto genera en las operaciones de
+sus clientes.
+Colores de Marca Rastreo Industrial
+Púrpura Profundo
+HEXA: #3A1C71
+RGB:
+• Red: 58
+• Green: 28
+• Blue: 113
+CMYK:
+• Cyan: 49%
+• Magenta: 75%
+• Yellow: 0%
+• Black: 56%
+Azul Industrial
+HEXA: #0277BD
+RGB:
+• Red: 2
+• Green: 119
+• Blue: 189
+CMYK:
+• Cyan: 99%
+• Magenta: 37%
+• Yellow: 0%
+• Black: 26%
+Azul Celeste
+HEXA: #00B0FF
+RGB:
+• Red: 0
+• Green: 176
+• Blue: 255
+CMYK:
+• Cyan: 100%
+• Magenta: 31%
+• Yellow: 0%
+• Black: 0%
+Coral Claro
+HEXA: #FF9E80
+RGB:
+• Red: 255
+• Green: 158
+• Blue: 128
+CMYK:
+• Cyan: 0%
+• Magenta: 38%
+• Yellow: 50%
+• Black: 0%
+Para garantizar una reproducción precisa del color, es fundamental utilizar la composición de colores
+indicada en la parte superior, evitando alteraciones que afecten la identidad visual de la marca. Asimismo,
+no se debe emplear la separación automática de colores que ofrece el sistema, ya que esto podría
+generar variaciones que se alejen de los tonos originales.
+Variantes de Imagotipo Rastreo Industrial
+VARIANTES DE COLOR
+El imagotipo de la marca está diseñado para ser impreso en cualquiera de las 3 variantes siguientes, y
+dependiendo de la situación, puede estar rodeado de un envolvente que sirve a su vez de protección.
+1. Versión principal: Púrpura Profundo ( #3A1C71 ), Azul Industrial ( #0277BD ), Azul Celeste (
+#00B0FF ) y Coral Claro ( #FF9E80 ) sobre fondo blanco
+2. Versión monocromática: Todo en Azul Industrial ( #0277BD ) para aplicaciones con limitaciones de
+color
+3. Versión negativa: Elementos en blanco sobre fondo Púrpura Profundo ( #3A1C71 )
+Las versiones monocromáticas han sido elaboradas para todo aquel medio que no permita la
+reproducción de la imagen en sus colores originales o que represente una diferencia significativa en
+costos de realización. Versiones disponibles para reproducción en una, dos, tres y cuatro tintas.
+Fuentes tipográficas Rastreo Industrial
+Montserrat Bold
+Aa, Bb, Cc, Dd, Ee, Ff, Gg, Hh, Ii, Jj, Kk, Ll, Mm, Nn, Ññ, Oo, Pp, Qq, Rr, Ss, Tt, Uu, Vv, Ww, Xx, Yy, Zz
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+Roboto
+Aa, Bb, Cc, Dd, Ee, Ff, Gg, Hh, Ii, Jj, Kk, Ll, Mm, Nn, Ññ, Oo, Pp, Qq, Rr, Ss, Tt, Uu, Vv, Ww, Xx, Yy, Zz
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+FUENTES TIPOGRÁFICAS
+• Logo: Montserrat Black
+• Títulos: Montserrat Bold
+• Subtítulos: Montserrat Medium
+• Texto: Roboto Regular
+Se seleccionaron estas familias tipográficas para reflejar la esencia de la marca. Montserrat en sus
+variantes Bold y Medium aporta solidez y modernidad para los títulos y subtítulos, mientras que Roboto
+garantiza una legibilidad óptima en textos descriptivos. La tipografía Montserrat Black en el logo otorga
+presencia y personalidad a la marca.
+Esta combinación asegura una identidad visual coherente y funcional que transmite profesionalismo,
+precisión y tecnología avanzada en todos los materiales de comunicación.
