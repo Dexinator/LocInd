@@ -1,0 +1,82 @@
+---
+// Importamos las imágenes para ambos temas
+import heroImageLight from '../assets/images/hero/main-light.png';
+import heroImageDark from '../assets/images/hero/main-dark.png';
+---
+
+<style define:vars={{ 
+  heroImageLightUrl: `url(${heroImageLight.src})`,
+  heroImageDarkUrl: `url(${heroImageDark.src})`
+}}>
+  .hero-bg {
+    background-size: cover;
+    background-position: center;
+    opacity: 0.6;
+    filter: brightness(0.9) contrast(1.1);
+  }
+
+  /* Imagen para modo claro */
+  .hero-bg {
+    background-image: var(--heroImageLightUrl);
+  }
+  
+  /* Imagen para modo oscuro */
+  :global(.dark) .hero-bg {
+    background-image: var(--heroImageDarkUrl);
+  }
+  
+  /* Aseguramos que el texto sea legible contra cualquier fondo */
+  .text-shadow {
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  
+  .content-container {
+    background-color: rgba(255,255,255,0.15);
+    backdrop-filter: blur(2px);
+    border-radius: 1rem;
+    padding: 2rem;
+  }
+
+  :global(.dark) .content-container {
+    background-color: rgba(0,0,0,0.25);
+  }
+</style>
+
+<section class="relative text-center py-20 md:py-32 overflow-hidden">
+    <!-- Capa de imagen de fondo con mayor opacidad -->
+    <div class="absolute inset-0 z-0 hero-bg"></div>
+    
+    <!-- Gradiente mejorado encima de la imagen -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-br from-blue-sky-500/20 via-transparent to-coral-light-500/10 dark:from-brand-purple/25 dark:via-transparent dark:to-brand-blue/15"></div>
+    
+    <!-- Contenido -->
+    <div class="container relative z-20 mx-auto px-4">
+        <div class="content-container mx-auto max-w-4xl">
+            <h1 class="text-4xl md:text-6xl font-bold font-heading mb-4 text-brand-purple animate-fade-in-up text-shadow">
+                Precisión en Localización <span class="text-brand-blue">Indoor</span>
+            </h1>
+            <p class="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200 text-shadow">
+                Tecnología de última generación para monitoreo en tiempo real. Soluciones adaptadas a tu industria.
+            </p>
+            <p class="slogan text-md md:text-lg mb-10 animate-fade-in-up animation-delay-400 text-shadow">
+                "Precisión que transforma la industria"
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center sm:space-x-4 space-y-4 sm:space-y-0 animate-fade-in-up animation-delay-600">
+                {/* Botón Primario */}
+                <a href="/productos" 
+                   class="bg-brand-blue hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
+                          text-white font-bold py-3 px-8 rounded-full 
+                          transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
+                    Ver Productos
+                </a>
+                {/* Botón Secundario */}
+                <a href="/contacto" 
+                   class="bg-transparent border-2 border-brand-purple hover:bg-brand-purple/10 dark:border-gray-300 dark:hover:bg-white/10 
+                          text-brand-purple dark:text-gray-300 font-bold py-3 px-8 rounded-full 
+                          transition duration-300 ease-in-out">
+                    Contáctanos
+                </a>
+            </div>
+        </div>
+    </div>
+</section>

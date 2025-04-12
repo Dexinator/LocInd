@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
+import Hero from '../sections/hero.astro';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
@@ -8,35 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Inicio" description="Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.">
 
     {/* Hero Section */}
-    <section class="text-center py-20 md:py-32 bg-gradient-to-br from-blue-sky-500/10 via-background to-coral-light-500/5 dark:from-brand-purple/30 dark:via-background dark:to-brand-blue/20">
-        <div class="container mx-auto px-4">
-            <h1 class="text-4xl md:text-6xl font-bold font-heading mb-4 text-brand-purple animate-fade-in-up">
-                Precisión en Localización <span class="text-brand-blue">Indoor</span>
-            </h1>
-            <p class="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-                Tecnología de última generación para monitoreo en tiempo real. Soluciones adaptadas a tu industria.
-            </p>
-            <p class="slogan text-md md:text-lg mb-10 animate-fade-in-up animation-delay-400">
-                "Precisión que transforma la industria"
-            </p>
-            <div class="flex justify-center space-x-4 animate-fade-in-up animation-delay-600">
-                {/* Botón Primario */}
-                <a href="/productos" 
-                   class="bg-brand-blue hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
-                          text-white font-bold py-3 px-8 rounded-full 
-                          transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
-                    Ver Productos
-                </a>
-                {/* Botón Secundario */}
-                <a href="/contacto" 
-                   class="bg-transparent border-2 border-brand-purple hover:bg-brand-purple/10 dark:border-gray-300 dark:hover:bg-white/10 
-                          text-brand-purple dark:text-gray-300 font-bold py-3 px-8 rounded-full 
-                          transition duration-300 ease-in-out">
-                    Contáctanos
-                </a>
-            </div>
-        </div>
-    </section>
+    <Hero />
 
     {/* Sección Características */}
     <section class="py-16 md:py-24">
