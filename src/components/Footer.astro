@@ -1,0 +1,57 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+const contactEmail = "contacto@localizacionindustrial.com"; // Placeholder email
+const contactPhone = "+52 222 123 4567"; // Placeholder phone
+---
+
+<footer class="bg-purple-deep-500 text-gray-300 py-8 mt-16">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Columna 1: Logo/Marca */}
+            <div>
+                <h3 class="text-lg font-bold font-heading text-white mb-2">Localización Industrial</h3>
+                <p class="text-sm">Precisión que transforma la industria.</p>
+                {/* Podríamos poner el logo estático pequeño aquí si quisiéramos */}
+            </div>
+
+            {/* Columna 2: Enlaces Rápidos (Placeholder) */}
+            <div>
+                <h4 class="text-md font-semibold font-heading text-white mb-2">Enlaces</h4>
+                <ul class="space-y-1 text-sm">
+                    <li><a href="/privacidad" class="hover:text-white transition-colors">Política de Privacidad</a></li>
+                    <li><a href="/terminos" class="hover:text-white transition-colors">Términos de Servicio</a></li>
+                    <li><a href="/productos" class="hover:text-white transition-colors">Productos</a></li>
+                    <li><a href="/contacto" class="hover:text-white transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+
+            {/* Columna 3: Contacto */}
+            <div>
+                <h4 class="text-md font-semibold font-heading text-white mb-2">Contacto</h4>
+                <ul class="space-y-1 text-sm">
+                    <li>
+                        <a href={`mailto:${contactEmail}`} class="hover:text-white transition-colors">{contactEmail}</a>
+                    </li>
+                    <li>
+                        <a href={`tel:${contactPhone.replace(/\s+/g, '')}`} class="hover:text-white transition-colors">{contactPhone}</a>
+                    </li>
+                    <li class="mt-2">
+                        Puebla, México (Placeholder)
+                    </li>
+                </ul>
+                 {/* Placeholder para iconos de redes sociales */}
+                 <div class="flex space-x-4 mt-4">
+                    <a href="#" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                    </a>
+                    {/* Añadir más iconos según sea necesario */}
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-8 border-t border-gray-700 text-center text-sm">
+            © {currentYear} Localización Industrial. Todos los derechos reservados.
+        </div>
+    </div>
+</footer> 

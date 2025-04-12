@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Datos de los casos de éxito (podrían venir de MD o una colección si fueran muchos)
+const successCases = [
+    {
+        location: 'Monterrey, México',
+        title: 'Optimización de Seguridad en Planta Industrial',
+        description: 'Implementamos geovallas inteligentes y monitoreo en tiempo real para mejorar la seguridad en una planta de manufactura. La solución redujo incidentes en un 40% y optimizó la operatividad del personal.',
+        imagePlaceholder: '/images/placeholders/case-study-1.jpg'
+    },
+    {
+        location: 'Madrid, España',
+        title: 'Gestión Avanzada de Flotas Logísticas',
+        description: 'Nuestra tecnología de RTLS permitió a una empresa de logística mejorar la trazabilidad de sus vehículos y reducir tiempos de inactividad, logrando un aumento del 25% en la eficiencia operativa.',
+        imagePlaceholder: '/images/placeholders/case-study-2.jpg'
+    },
+    {
+        location: 'Amazonas, Brasil',
+        title: 'Monitoreo de Activos en Operación Minera',
+        description: 'Implementamos una solución de rastreo en tiempo real para maquinaria pesada en una operación minera, mejorando la eficiencia del mantenimiento y reduciendo costos operativos en un 30%.',
+        imagePlaceholder: '/images/placeholders/case-study-3.jpg'
+    }
+];
+---
+<BaseLayout title="Casos de Éxito" description="Descubre cómo Localización Industrial ha ayudado a empresas en México, España y Brasil a optimizar su seguridad, logística y operaciones mineras con geolocalización precisa.">
+
+    {/* Sección Principal: Casos de Éxito */}
+    <section class="py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 md:mb-16">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 text-purple-deep dark:text-white">
+                    Casos de Éxito Comprobados
+                </h1>
+                <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+                    Explora cómo nuestras soluciones de geolocalización han generado resultados tangibles para nuestros clientes.
+                </p>
+            </div>
+
+            {/* Grid de Casos de Éxito */}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                {successCases.map((study, index) => (
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden flex flex-col transform transition duration-300 hover:scale-[1.03] hover:shadow-xl">
+                        <img src={study.imagePlaceholder} alt={`Imagen representativa de ${study.title}`} class="w-full h-48 object-cover bg-gray-300 dark:bg-gray-700"/>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <span class="text-sm font-semibold text-blue-industrial dark:text-blue-sky mb-1">{study.location}</span>
+                            <h2 class="text-xl font-bold font-heading mb-3 text-gray-900 dark:text-white flex-grow">{study.title}</h2>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-4">
+                                {study.description}
+                            </p>
+                            {/* Podríamos añadir un botón/enlace si hubiera más detalles */}
+                            {/* <a href="#" class="text-purple-deep dark:text-coral-light font-semibold text-sm hover:underline mt-auto">Leer más</a> */}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+     {/* Sección CTA (similar a la de como-funciona) */}
+     <section class="py-16 bg-gray-100 dark:bg-gray-800/50">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold font-heading mb-4 text-gray-800 dark:text-white">¿Quieres resultados similares?</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto">Contacta con nosotros para analizar tus necesidades y diseñar una solución a medida.</p>
+            <a href="/contacto" class="bg-blue-industrial hover:bg-blue-700 dark:bg-blue-sky dark:hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
+                Hablar con un experto
+            </a>
+        </div>
+    </section>
+
+</BaseLayout> 

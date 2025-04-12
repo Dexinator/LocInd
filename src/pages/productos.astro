@@ -1,0 +1,34 @@
+---
+// src/pages/productos.astro (Versión Restaurada con getCollection)
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+
+// El tipado ahora viene de getCollection
+const products = await getCollection('products');
+
+// Opcional: Ordenar productos
+products.sort((a, b) => a.data.id.localeCompare(b.data.id));
+---
+
+<BaseLayout title="Productos" description="Explora nuestra gama de soluciones de hardware y software para localización industrial de alta precisión.">
+    <section class="py-12 md:py-16">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold font-heading mb-8 text-center text-purple-deep dark:text-white">
+                Nuestros Productos y Soluciones
+            </h1>
+
+            {/* Grid para mostrar los productos */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {products.map(product => (
+                    <ProductCard product={product} />
+                ))}
+            </div>
+
+            {products.length === 0 && (
+                // Mensaje si la colección está vacía (ahora debería funcionar)
+                <p class="text-center text-gray-600 dark:text-gray-400 mt-12">No hay productos para mostrar en este momento. Verifica que los archivos en src/content/products cumplan el schema.</p>
+            )}
+        </div>
+    </section>
+</BaseLayout> 

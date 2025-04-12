@@ -1,65 +1,68 @@
 @import "tailwindcss";
 
+/* Personalizar el selector para el modo oscuro */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Variables de tema para Rastreo Industrial */
 @theme {
   /* Colores primarios de la marca */
-  --color-purpura: #3A1C71;
-  --color-azul: #0277BD;
-  --color-azul-celeste: #00B0FF;
-  --color-coral: #FF9E80;
+  --color-purple-deep-500: #3A1C71;
+  --color-blue-industrial-500: #0277BD;
+  --color-blue-sky-500: #00B0FF;
+  --color-coral-light-500: #FF9E80;
   
   /* Variaciones del Púrpura Profundo */
-  --color-purpura-50: #eeeaf5;
-  --color-purpura-100: #d5caeb;
-  --color-purpura-200: #b9a6dc;
-  --color-purpura-300: #9c81ce;
-  --color-purpura-400: #8257bd;
-  --color-purpura-500: #664aa7;
-  --color-purpura-600: #533a8c;
-  --color-purpura-700: #442e73;
-  --color-purpura-800: #3A1C71;
-  --color-purpura-900: #2a1453;
+  --color-purple-deep-50: #eeeaf5;
+  --color-purple-deep-100: #d5caeb;
+  --color-purple-deep-200: #b9a6dc;
+  --color-purple-deep-300: #9c81ce;
+  --color-purple-deep-400: #8257bd;
+  /* --color-purple-deep-500: #3A1C71; Ya definido arriba */
+  --color-purple-deep-600: #533a8c;
+  --color-purple-deep-700: #442e73;
+  --color-purple-deep-800: #3A1C71;
+  --color-purple-deep-900: #2a1453;
   
   /* Variaciones del Azul Industrial */
-  --color-azul-50: #e1f2fd;
-  --color-azul-100: #b8e0fa;
-  --color-azul-200: #8acdf7;
-  --color-azul-300: #5cb9f3;
-  --color-azul-400: #2aa6f0;
-  --color-azul-500: #0e8dde;
-  --color-azul-600: #0277BD;
-  --color-azul-700: #01639e;
-  --color-azul-800: #014e7f;
-  --color-azul-900: #003a60;
+  --color-blue-industrial-50: #e1f2fd;
+  --color-blue-industrial-100: #b8e0fa;
+  --color-blue-industrial-200: #8acdf7;
+  --color-blue-industrial-300: #5cb9f3;
+  --color-blue-industrial-400: #2aa6f0;
+  /* --color-blue-industrial-500: #0277BD; Ya definido arriba */
+  --color-blue-industrial-600: #0277BD;
+  --color-blue-industrial-700: #01639e;
+  --color-blue-industrial-800: #014e7f;
+  --color-blue-industrial-900: #003a60;
   
   /* Variaciones del Azul Celeste */
-  --color-azul-celeste-50: #e3f6ff;
-  --color-azul-celeste-100: #b9e9ff;
-  --color-azul-celeste-200: #8ddbff;
-  --color-azul-celeste-300: #5ccdff;
-  --color-azul-celeste-400: #2ec0ff;
-  --color-azul-celeste-500: #00B0FF;
-  --color-azul-celeste-600: #0090d0;
-  --color-azul-celeste-700: #0071a3;
-  --color-azul-celeste-800: #005176;
-  --color-azul-celeste-900: #00314a;
+  --color-blue-sky-50: #e3f6ff;
+  --color-blue-sky-100: #b9e9ff;
+  --color-blue-sky-200: #8ddbff;
+  --color-blue-sky-300: #5ccdff;
+  --color-blue-sky-400: #2ec0ff;
+  /* --color-blue-sky-500: #00B0FF; Ya definido arriba */
+  --color-blue-sky-600: #0090d0;
+  --color-blue-sky-700: #0071a3;
+  --color-blue-sky-800: #005176;
+  --color-blue-sky-900: #00314a;
   
   /* Variaciones del Coral Claro */
-  --color-coral-50: #fff5f2;
-  --color-coral-100: #ffebe5;
-  --color-coral-200: #ffd6c9;
-  --color-coral-300: #ffc2ad;
-  --color-coral-400: #ffad91;
-  --color-coral-500: #FF9E80;
-  --color-coral-600: #ff7f56;
-  --color-coral-700: #ff612d;
-  --color-coral-800: #ff4303;
-  --color-coral-900: #d93500;
+  --color-coral-light-50: #fff5f2;
+  --color-coral-light-100: #ffebe5;
+  --color-coral-light-200: #ffd6c9;
+  --color-coral-light-300: #ffc2ad;
+  --color-coral-light-400: #ffad91;
+  /* --color-coral-light-500: #FF9E80; Ya definido arriba */
+  --color-coral-light-600: #ff7f56;
+  --color-coral-light-700: #ff612d;
+  --color-coral-light-800: #ff4303;
+  --color-coral-light-900: #d93500;
   
   /* Colores de estado */
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-error: #EF4444;
+  --color-success-500: #10B981;
+  --color-warning-500: #F59E0B;
+  --color-error-500: #EF4444;
   
   /* Fuentes */
   --font-sans: 'Roboto', system-ui, sans-serif;
@@ -90,7 +93,7 @@
 /* Utilidades personalizadas */
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(90deg, var(--color-purpura), var(--color-azul));
+    background: linear-gradient(90deg, var(--color-purple-deep-500), var(--color-blue-industrial-500));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

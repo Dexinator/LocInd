@@ -1,0 +1,52 @@
+---
+// src/layouts/BaseLayout.astro
+import '../styles/global.css'; // Importaremos los estilos globales de Tailwind aquí
+import Header from '../components/Header.astro'; // Importar el Header real
+import Footer from '../components/Footer.astro'; // Importar el Footer real
+
+// Props que puede recibir el layout (ej. título de la página)
+interface Props {
+	title: string;
+    description?: string; // Opcional para meta descripción
+}
+
+const { title, description = 'Localización Industrial - Precisión que transforma la industria' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content={description} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title} | Localización Industrial</title>
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+        <!-- Script para inicializar tema oscuro y evitar parpadeos -->
+        <script is:inline>
+            // Inicializar tema antes del renderizado para evitar parpadeos
+            const savedTheme = localStorage.getItem('theme');
+            
+            if (savedTheme === 'dark' || 
+                (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+	</head>
+	<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300 ease-in-out flex flex-col min-h-screen">
+		<Header /> {/* Usar el componente Header */}
+		<main class="container mx-auto px-4 py-8 flex-grow">
+            {/* El contenido específico de cada página se insertará aquí */}
+			<slot />
+		</main>
+        <Footer /> {/* Usar el componente Footer */}
+	</body>
+</html> 

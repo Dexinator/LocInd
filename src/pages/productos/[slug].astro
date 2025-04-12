@@ -1,0 +1,235 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// Importar un componente para la galería de imágenes si es necesario
+// import ImageGallery from '../../components/ImageGallery.astro';
+// Importar el componente para el botón de compra (lo crearemos más adelante)
+// import AddToCartButton from '../../components/AddToCartButton.astro';
+
+// 1. La colección 'products' ya está definida en src/content/config.ts
+
+// 2. Generar una página para cada producto
+export async function getStaticPaths() {
+    // Usar await getCollection para obtener entradas validadas por el schema
+    const products = await getCollection('products');
+    return products.map(product => ({
+        params: { slug: product.slug },
+        props: { product },
+    }));
+}
+
+type Props = {
+    // Usar CollectionEntry con el nombre de la colección para tipado fuerte
+    product: CollectionEntry<'products'>;
+}
+
+const { product } = Astro.props;
+const { Content } = await product.render(); // Renderizar el contenido Markdown/MDX
+// Acceder a los datos validados a través de product.data
+const { id, title, description, image_link, additional_image_link, availability, price, features, specs, brand } = product.data;
+
+const displayPrice = price === 'Consultar' ? 'Consultar' : `$${price.replace(' USD', '')}`;
+const isConsultar = price === 'Consultar';
+const isAvailable = availability === 'in stock';
+
+const allImages = [image_link, ...(additional_image_link || [])];
+---
+
+<BaseLayout title={title} description={description.substring(0, 160)}> {/* Meta descripción corta */}
+    <article class="py-12 md:py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+                {/* Columna Izquierda: Galería de Imágenes */}
+                <div class="sticky top-24">
+                    {/* Placeholder para Galería de Imágenes */}
+                    {/* <ImageGallery images={allImages} /> */}
+                    <img src={image_link} alt={`Imagen principal de ${title}`} class="w-full rounded-lg shadow-lg mb-4 aspect-square object-cover border dark:border-gray-700" />
+                    {additional_image_link && additional_image_link.length > 0 && (
+                        <div class="grid grid-cols-4 gap-2">
+                            {additional_image_link.map(imgUrl => (
+                                <button class="block w-full rounded aspect-square object-cover cursor-pointer border-2 border-transparent hover:border-blue-industrial dark:hover:border-blue-sky focus:border-blue-industrial dark:focus:border-blue-sky transition overflow-hidden">
+                                    <img src={imgUrl} alt={`Vista adicional de ${title}`} class="w-full h-full object-cover"/>
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                     {(!additional_image_link || additional_image_link.length === 0) && (
+                        <div class="text-sm text-gray-500 italic mt-2">Más vistas próximamente.</div>
+                    )}
+                </div>
+
+                {/* Columna Derecha: Detalles del Producto y Compra */}
+                <div>
+                    <h1 class="text-3xl md:text-4xl font-bold font-heading mb-3 text-purple-deep dark:text-white">{title}</h1>
+                    <p class="text-lg text-gray-700 dark:text-gray-300 mb-4">{description}</p>
+
+                    <div class="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700 flex items-center gap-4 flex-wrap">
+                        <span class:list={[
+                            "text-3xl font-bold",
+                            isConsultar ? "text-purple-deep dark:text-coral-light" : "text-blue-industrial dark:text-blue-sky"
+                        ]}>
+                            {displayPrice}
+                        </span>
+                        {availability === 'out of stock' && (
+                             <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
+                                <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
+                                Agotado
+                             </span>
+                        )}
+                        {isConsultar && (
+                            <span class="inline-flex items-center bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
+                                <span class="w-2 h-2 me-1 bg-purple-500 rounded-full"></span>
+                                Servicio bajo consulta
+                            </span>
+                        )}
+                         {availability === 'in stock' && !isConsultar && (
+                            <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
+                                <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
+                                En Stock
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Placeholder para Botón de Compra/Añadir al Carrito */}
+                    <div class="mb-8">
+                         {isAvailable && !isConsultar && (
+                            <button
+                                id="add-to-cart-button"
+                                class="w-full bg-blue-industrial hover:bg-blue-700 dark:bg-blue-sky dark:hover:bg-blue-400 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                data-product-id={id}
+                                data-product-name={title}
+                                data-product-price={price.replace(' USD', '')}
+                                data-product-image={image_link}
+                                data-product-url={Astro.url.pathname}
+                                >
+                                Añadir al Carrito (Placeholder)
+                            </button>
+                        )}
+                        {isConsultar && (
+                             <a href={`/contacto?producto=${encodeURIComponent(title)}`} class="block w-full text-center bg-purple-deep hover:bg-purple-800 dark:bg-coral-light dark:hover:bg-coral-400 dark:text-purple-deep text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
+                                Solicitar Consulta sobre "{title}"
+                            </a>
+                        )}
+                        {!isAvailable && (
+                            <button class="w-full bg-gray-300 text-gray-500 font-bold py-3 px-6 rounded-lg cursor-not-allowed dark:bg-gray-700 dark:text-gray-400" disabled>
+                                Producto Agotado
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Sección de Características */}
+                    {features && features.length > 0 && (
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold font-heading mb-3 text-gray-800 dark:text-gray-200">Características Clave</h3>
+                            <ul class="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400 pl-2">
+                                {features.map(feature => <li>{feature}</li>)}
+                            </ul>
+                        </div>
+                    )}
+
+                    {/* Contenido MDX (Descripción Ampliada) */}
+                    <div class="prose dark:prose-invert max-w-none mb-8 border-t border-gray-200 dark:border-gray-700 pt-8">
+                        <h3 class="text-xl font-semibold font-heading mb-3 text-gray-800 dark:text-gray-200">Descripción Detallada</h3>
+                        <Content />
+                    </div>
+
+                    {/* Sección de Especificaciones */}
+                    {specs && specs.length > 0 && (
+                        <div class="border-t border-gray-200 dark:border-gray-700 pt-8">
+                            <h3 class="text-xl font-semibold font-heading mb-3 text-gray-800 dark:text-gray-200">Especificaciones Técnicas</h3>
+                            <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                    <tbody>
+                                        {specs.map((spec, index) => (
+                                            <tr class:list={[
+                                                "border-b dark:border-gray-700",
+                                                index % 2 === 0 ? "bg-white dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700"
+                                            ]}>
+                                                <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{spec.name}</th>
+                                                <td class="px-6 py-3">{spec.value}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    {/* Script para posible galería de imágenes o interacción del botón AddToCart */}
+    <script>
+        import { addToCart } from '../../utils/cart.js'; // Importar la función
+
+        // Ejemplo: Cambiar imagen principal al hacer clic en miniatura
+        const mainImage = document.querySelector('img[alt^="Imagen principal"]');
+        const thumbnailButtons = document.querySelectorAll('button[class*="aspect-square"]');
+
+        thumbnailButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const imgInside = button.querySelector('img');
+                if (mainImage instanceof HTMLImageElement && imgInside instanceof HTMLImageElement) {
+                    mainImage.src = imgInside.src;
+                }
+            });
+        });
+
+        // Lógica actualizada para el botón "Añadir al Carrito"
+        const addToCartButton = document.getElementById('add-to-cart-button');
+
+        // Asegurar que el elemento es un botón antes de añadir el listener
+        if (addToCartButton instanceof HTMLButtonElement) {
+            addToCartButton.addEventListener('click', () => {
+                const button = addToCartButton; // Ya sabemos que es HTMLButtonElement
+                
+                // Validar que los dataset no sean undefined antes de usarlos
+                const productId = button.dataset.productId;
+                const productName = button.dataset.productName;
+                const productPriceStr = button.dataset.productPrice;
+                const productImage = button.dataset.productImage;
+                const productUrl = button.dataset.productUrl;
+
+                if (!productId || !productName || !productPriceStr || !productImage || !productUrl) {
+                     console.error("Faltan datos del producto en los atributos data-* del botón.");
+                     alert("Error al añadir el producto al carrito (faltan datos).");
+                     return;
+                }
+
+                const price = parseFloat(productPriceStr);
+                if (isNaN(price)) {
+                    console.error("Precio del producto inválido", productPriceStr);
+                    alert("Error al añadir el producto al carrito (precio inválido).");
+                    return;
+                }
+
+                const newItem = {
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    image: productImage,
+                    url: productUrl,
+                    quantity: 1 
+                };
+
+                addToCart(newItem);
+
+                // Feedback visual
+                button.textContent = 'Añadido!';
+                button.disabled = true;
+                setTimeout(() => {
+                    // Verificar si el botón todavía existe antes de re-habilitarlo
+                    const currentButtonState = document.getElementById('add-to-cart-button');
+                    if (currentButtonState instanceof HTMLButtonElement) {
+                         currentButtonState.textContent = 'Añadir al Carrito';
+                         currentButtonState.disabled = false;
+                    }
+                }, 1500);
+            });
+        } else if (addToCartButton) {
+            console.warn("El elemento con id 'add-to-cart-button' no es un botón.");
+        }
+    </script>
+</BaseLayout> 
