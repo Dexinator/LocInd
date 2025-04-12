@@ -7,72 +7,77 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="Inicio" description="Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.">
 
-    {/* Hero Section - Inspirado en ambas referencias */}
-    <section class="text-center py-20 md:py-32 bg-gradient-to-br from-blue-sky/20 via-white to-coral-light/10 dark:from-purple-deep/50 dark:via-gray-900 dark:to-blue-industrial/30">
+    {/* Hero Section */}
+    <section class="text-center py-20 md:py-32 bg-gradient-to-br from-blue-sky-500/10 via-background to-coral-light-500/5 dark:from-brand-purple/30 dark:via-background dark:to-brand-blue/20">
         <div class="container mx-auto px-4">
-            <h1 class="text-4xl md:text-6xl font-bold font-heading mb-4 text-purple-deep dark:text-white animate-fade-in-up">
-                Precisión en Localización <span class="text-blue-industrial dark:text-blue-sky">Indoor</span>
+            <h1 class="text-4xl md:text-6xl font-bold font-heading mb-4 text-brand-purple animate-fade-in-up">
+                Precisión en Localización <span class="text-brand-blue">Indoor</span>
             </h1>
-            <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+            <p class="text-lg md:text-xl text-text-muted mb-8 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
                 Tecnología de última generación para monitoreo en tiempo real. Soluciones adaptadas a tu industria.
             </p>
-            <p class="text-md md:text-lg italic text-gray-600 dark:text-gray-400 mb-10 animate-fade-in-up animation-delay-400">
+            <p class="slogan text-md md:text-lg mb-10 animate-fade-in-up animation-delay-400">
                 "Precisión que transforma la industria"
             </p>
             <div class="flex justify-center space-x-4 animate-fade-in-up animation-delay-600">
-                <a href="/productos" class="bg-blue-industrial hover:bg-blue-700 dark:bg-blue-sky dark:hover:bg-blue-400 text-white font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
+                {/* Botón Primario */}
+                <a href="/productos" 
+                   class="bg-brand-blue hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
+                          text-white font-bold py-3 px-8 rounded-full 
+                          transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
                     Ver Productos
                 </a>
-                <a href="/contacto" class="bg-transparent border-2 border-purple-deep hover:bg-purple-deep/10 dark:border-gray-300 dark:hover:bg-white/10 text-purple-deep dark:text-gray-300 font-bold py-3 px-8 rounded-full transition duration-300 ease-in-out">
+                {/* Botón Secundario */}
+                <a href="/contacto" 
+                   class="bg-transparent border-2 border-brand-purple hover:bg-brand-purple/10 dark:border-gray-300 dark:hover:bg-white/10 
+                          text-brand-purple dark:text-gray-300 font-bold py-3 px-8 rounded-full 
+                          transition duration-300 ease-in-out">
                     Contáctanos
                 </a>
             </div>
         </div>
     </section>
 
-    {/* Sección Características Principales (Placeholder) */}
+    {/* Sección Características */}
     <section class="py-16 md:py-24">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12 text-gray-800 dark:text-white">Soluciones Avanzadas de Geolocalización</h2>
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12 text-text-base">Soluciones Avanzadas de Geolocalización</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                {/* Feature 1 */}
-                <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <div class="text-blue-industrial dark:text-blue-sky mb-4">
-                         {/* Placeholder Icon */}
+                {/* Feature Card - Ejemplo refactorizado */}
+                <div class="bg-background border border-border p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-brand-blue mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold font-heading mb-2 text-gray-900 dark:text-white">RTLS de Alta Precisión</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Rastrea personas y activos en tiempo real con tecnología Ultra-Wideband (UWB).</p>
+                    <h3 class="text-xl font-bold font-heading mb-2 text-text-base">RTLS de Alta Precisión</h3>
+                    <p class="text-text-muted text-sm">Rastrea personas y activos en tiempo real con tecnología Ultra-Wideband (UWB).</p>
                 </div>
-                 {/* Feature 2 */}
-                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <div class="text-blue-industrial dark:text-blue-sky mb-4">
-                         {/* Placeholder Icon */}
+                {/* Feature Card 2 */}
+                 <div class="bg-background border border-border p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-brand-blue mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold font-heading mb-2 text-gray-900 dark:text-white">Geovallas Inteligentes</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Define zonas seguras y restringidas. Asegura el cumplimiento de protocolos.</p>
+                    <h3 class="text-xl font-bold font-heading mb-2 text-text-base">Geovallas Inteligentes</h3>
+                    <p class="text-text-muted text-sm">Define zonas seguras y restringidas. Asegura el cumplimiento de protocolos.</p>
                 </div>
-                 {/* Feature 3 */}
-                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <div class="text-blue-industrial dark:text-blue-sky mb-4">
-                         {/* Placeholder Icon */}
+                 {/* Feature Card 3 */}
+                 <div class="bg-background border border-border p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <div class="text-brand-blue mb-4">
                         <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10m16-10v10M4 7l8 4 8-4M4 17l8 4 8-4"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold font-heading mb-2 text-gray-900 dark:text-white">Optimización Logística</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Monitorea vehículos y activos en almacenes. Optimiza rutas y reduce tiempos.</p>
+                    <h3 class="text-xl font-bold font-heading mb-2 text-text-base">Optimización Logística</h3>
+                    <p class="text-text-muted text-sm">Monitorea vehículos y activos en almacenes. Optimiza rutas y reduce tiempos.</p>
                 </div>
-                {/* Añadir más features si es necesario (hasta 6 según web original) */}
             </div>
         </div>
     </section>
 
-    {/* Otras secciones (Cómo funciona, Casos de éxito simplificados, CTA) - Placeholder */}
-    <section class="py-16 md:py-24 bg-gray-50 dark:bg-gray-800/50">
+    {/* Sección Cómo Funciona */}
+    <section class="py-16 md:py-24 bg-background-alt border-t border-border">
         <div class="container mx-auto px-4 text-center">
-             <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12 text-gray-800 dark:text-white">Cómo Funciona</h2>
-             <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8">Placeholder explicando brevemente el proceso (Anclas -> Tags -> Plataforma).</p>
-             <a href="/como-funciona" class="text-blue-industrial dark:text-blue-sky font-semibold hover:underline">Saber más -></a>
+             <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12 text-text-base">Cómo Funciona</h2>
+             <p class="text-lg text-text-muted max-w-3xl mx-auto mb-8">Placeholder explicando brevemente el proceso (Anclas -> Tags -> Plataforma).</p>
+             {/* Enlace usa estilos base de global.css */}
+             <a href="/como-funciona" class="font-semibold hover:underline">Saber más -></a>
         </div>
     </section>
 

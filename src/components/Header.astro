@@ -15,15 +15,15 @@ const navItems = [
 ];
 ---
 
-<header class="sticky top-0 z-50 bg-white dark:bg-purple-deep-500 shadow-md transition-colors duration-300 ease-in-out">
+<header class="sticky top-0 z-50 bg-background shadow-md transition-colors duration-300 ease-in-out border-b border-border">
     <nav class="container mx-auto px-4 py-2 flex justify-between items-center">
         <a href="/" class="flex items-center">
             <!-- Insertar el SVG interactivo. Usar <object> permite que el JS/CSS interno funcione -->
-            <object type="image/svg+xml" data="/logo.svg" class="h-10 md:h-12 lg:h-16 w-auto">
+
                 <!-- Fallback por si <object> no carga -->
                 <img src="/logo.svg" alt="Localización Industrial Logo" class="h-10 md:h-12 lg:h-16 w-auto" />
-            </object>
-            <!-- <span class="ml-3 text-xl font-bold font-heading text-purple-deep-500 dark:text-white">Localización Industrial</span> -->
+
+            <!-- <span class="ml-3 text-xl font-bold font-heading text-brand-purple">Localización Industrial</span> -->
             <!-- El nombre puede estar ya en el SVG, si no, lo añadimos -->
         </a>
 
@@ -32,7 +32,7 @@ const navItems = [
             <ul class="hidden md:flex space-x-6">
                 {navItems.map((item) => (
                     <li>
-                        <a href={item.href} class="text-gray-700 dark:text-gray-300 hover:text-blue-industrial-500 dark:hover:text-blue-sky-500 font-medium transition-colors">
+                        <a href={item.href} class="text-text-base hover:text-brand-blue font-medium transition-colors">
                             {item.name}
                         </a>
                     </li>
@@ -40,9 +40,9 @@ const navItems = [
             </ul>
 
             <!-- Indicador Carrito -->
-            <a href="/carrito" class="relative text-gray-700 dark:text-gray-300 hover:text-blue-industrial-500 dark:hover:text-blue-sky-500 transition-colors">
+            <a href="/carrito" class="relative text-text-muted hover:text-brand-blue transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                <span id="cart-count-badge" class="absolute -top-2 -right-2 bg-coral-light-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                <span id="cart-count-badge" class="absolute -top-2 -right-2 bg-brand-coral text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
             </a>
 
             <!-- Botón de Tema -->
@@ -52,30 +52,30 @@ const navItems = [
 
             <!-- Botón Menú Móvil -->
             <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-700 dark:text-gray-300 focus:outline-none">
+                <button id="mobile-menu-button" class="text-text-muted focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- Menú Móvil (Añadir enlace a carrito) -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-purple-deep-500 shadow-lg absolute w-full">
+    <!-- Menú Móvil -->
+    <div id="mobile-menu" class="hidden md:hidden bg-background shadow-lg absolute w-full border-t border-border">
         <ul class="px-4 py-2">
             {navItems.map((item) => (
                 <li class="py-2">
-                    <a href={item.href} class="block text-gray-700 dark:text-gray-300 hover:text-blue-industrial-500 dark:hover:text-blue-sky-500 font-medium">
+                    <a href={item.href} class="block text-text-base hover:text-brand-blue font-medium">
                         {item.name}
                     </a>
                 </li>
             ))}
-             <li class="py-2 border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
-                 <a href="/carrito" class="block text-gray-700 dark:text-gray-300 hover:text-blue-industrial-500 dark:hover:text-blue-sky-500 font-medium">
+             <li class="py-2 border-t border-border mt-2 pt-2">
+                 <a href="/carrito" class="block text-text-base hover:text-brand-blue font-medium">
                      Carrito <span id="mobile-cart-count">(0)</span>
                  </a>
              </li>
-             <li class="py-2 flex items-center">
-                 <span class="text-gray-700 dark:text-gray-300 mr-2">Tema:</span>
+             <li class="py-2 flex items-center border-t border-border mt-2 pt-2">
+                 <span class="text-text-base mr-2">Tema:</span>
                  <ThemeToggle />
              </li>
         </ul>

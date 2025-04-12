@@ -18,7 +18,10 @@ const displayPrice = price === 'Consultar' ? 'Consultar' : `$${price.replace(' U
 const isConsultar = price === 'Consultar';
 ---
 
-<a href={url} class="group block bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 border border-transparent hover:border-blue-industrial/50 dark:hover:border-blue-sky/50">
+<a href={url} 
+   class="group block bg-background border border-border rounded-lg shadow-md hover:shadow-xl overflow-hidden 
+          transition duration-300 ease-in-out transform hover:-translate-y-1 
+          hover:border-brand-blue/50">
     <div class="relative w-full aspect-square overflow-hidden">
         <img
             src={image_link} 
@@ -29,29 +32,30 @@ const isConsultar = price === 'Consultar';
         {/* Overlay opcional al hacer hover */}
         <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
         {availability === 'out of stock' && (
-            <span class="absolute top-2 left-2 bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded z-10">Agotado</span>
+            <span class="absolute top-2 left-2 bg-error text-white text-xs font-semibold px-2 py-1 rounded z-10">Agotado</span>
         )}
          {isConsultar && (
-            <span class="absolute top-2 right-2 bg-purple-deep text-white text-xs font-semibold px-2 py-1 rounded z-10">Servicio</span>
+            <span class="absolute top-2 right-2 bg-brand-purple text-white text-xs font-semibold px-2 py-1 rounded z-10">Servicio</span>
         )}
     </div>
     <div class="p-4">
-        <h3 class="text-lg font-bold font-heading text-gray-900 dark:text-white mb-1 truncate group-hover:text-blue-industrial dark:group-hover:text-blue-sky transition-colors">
+        <h3 class="text-lg font-bold font-heading text-text-base mb-1 truncate group-hover:text-brand-blue transition-colors">
             {title}
         </h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3 min-h-[40px]">
+        <p class="text-sm text-text-muted mb-3 min-h-[40px]">
             {/* Descripción corta */}
             {description.length > 80 ? description.substring(0, 80) + '...' : description}
         </p>
         <div class="flex justify-between items-center">
             <span class:list={[
                 "text-xl font-bold",
-                isConsultar ? "text-purple-deep dark:text-coral-light" : "text-blue-industrial dark:text-blue-sky"
+                // Usamos brand-purple para Servicios (Consultar), brand-blue para productos con precio
+                isConsultar ? "text-brand-purple" : "text-brand-blue"
             ]}>
                 {displayPrice}
             </span>
             {/* Icono "Ver más" */}
-            <svg class="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover:text-blue-industrial dark:group-hover:text-blue-sky transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            <svg class="w-5 h-5 text-text-muted group-hover:text-brand-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
         </div>
     </div>
 </a> 

@@ -7,14 +7,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <BaseLayout title="Carrito de Compras" description="Revisa los productos en tu carrito y procede al pago.">
     <section class="py-12 md:py-16">
         <div class="container mx-auto px-4">
-            <h1 class="text-3xl md:text-4xl font-bold font-heading mb-8 text-center text-purple-deep dark:text-white">
+            <h1 class="text-3xl md:text-4xl font-bold font-heading mb-8 text-center text-text-base">
                 Tu Carrito de Compras
             </h1>
 
             {/* Contenedor para renderizar el carrito dinámicamente */}
-            <div id="cart-container" class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8">
+            <div id="cart-container" class="bg-background border border-border rounded-lg shadow-lg p-6 md:p-8">
                 {/* El contenido se generará por JS */}
-                <p class="text-center text-gray-500 dark:text-gray-400">Cargando carrito...</p>
+                <p class="text-center text-text-muted">Cargando carrito...</p>
             </div>
 
         </div>
@@ -46,11 +46,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
-                    <h3 class="mt-2 text-lg font-semibold text-gray-900 dark:text-white">Tu carrito está vacío</h3>
-                    <p class="mt-1 text-gray-500 dark:text-gray-400">Empieza añadiendo algunos productos.</p>
+                    <h3 class="mt-2 text-lg font-semibold text-text-base">Tu carrito está vacío</h3>
+                    <p class="mt-1 text-text-muted">Empieza añadiendo algunos productos.</p>
                     <div class="mt-6">
                         <a href="/productos"
-                           class="inline-flex items-center rounded-md bg-blue-industrial px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 dark:bg-blue-sky dark:hover:bg-blue-400 dark:text-purple-deep">
+                           class="inline-flex items-center rounded-md bg-brand-blue px-4 py-2 text-sm font-semibold text-white shadow-sm 
+                                  hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
+                                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue">
                             <svg class="-ml-0.5 mr-1.5 h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                             </svg>
@@ -66,28 +68,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         // Generar HTML para la tabla/lista de items (usando item.id, item.quantity, etc.)
         const itemsHtml = items.map(item => `
-            <li class="flex py-6 border-b border-gray-200 dark:border-gray-700">
-                <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200 dark:border-gray-600">
+            <li class="flex py-6 border-b border-border">
+                <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-border">
                     <img src="${item.image}" alt="${item.name}" class="h-full w-full object-cover object-center">
                 </div>
                 <div class="ml-4 flex flex-1 flex-col">
                     <div>
-                        <div class="flex justify-between text-base font-medium text-gray-900 dark:text-white">
+                        <div class="flex justify-between text-base font-medium text-text-base">
                             <h3>
                                 <a href="${item.url}" class="hover:underline">${item.name}</a>
                             </h3>
                             <p class="ml-4">$${(item.price * item.quantity).toFixed(2)}</p>
                         </div>
-                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Precio Unitario: $${item.price.toFixed(2)}</p>
+                        <p class="mt-1 text-sm text-text-muted">Precio Unitario: $${item.price.toFixed(2)}</p>
                     </div>
                     <div class="flex flex-1 items-end justify-between text-sm mt-2">
-                        <div class="flex items-center border border-gray-300 dark:border-gray-600 rounded">
-                            <button class="px-2 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50" data-cart-action="decrease" data-product-id="${item.id}" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
-                            <span class="px-3 py-1 text-gray-900 dark:text-white">${item.quantity}</span>
-                            <button class="px-2 py-1 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700" data-cart-action="increase" data-product-id="${item.id}">+</button>
+                        <div class="flex items-center border border-border rounded">
+                            <button class="px-2 py-1 text-text-muted hover:bg-background-alt disabled:opacity-50" data-cart-action="decrease" data-product-id="${item.id}" ${item.quantity <= 1 ? 'disabled' : ''}>-</button>
+                            <span class="px-3 py-1 text-text-base">${item.quantity}</span>
+                            <button class="px-2 py-1 text-text-muted hover:bg-background-alt" data-cart-action="increase" data-product-id="${item.id}">+</button>
                         </div>
                         <div class="flex">
-                            <button type="button" class="font-medium text-red-600 dark:text-red-400 hover:text-red-500 dark:hover:text-red-300" data-cart-action="remove" data-product-id="${item.id}">
+                            <button type="button" class="font-medium text-error hover:text-red-500 dark:hover:text-red-300" data-cart-action="remove" data-product-id="${item.id}">
                                 Eliminar
                             </button>
                         </div>
@@ -99,25 +101,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         // Generar HTML completo del carrito
         cartContainer.innerHTML = `
             <div class="flow-root">
-                <ul role="list" class="-my-6 divide-y divide-gray-200 dark:divide-gray-700">
+                <ul role="list" class="-my-6 divide-y divide-border">
                     ${itemsHtml}
                 </ul>
             </div>
-            <div class="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
-                 <div class="flex justify-between text-base font-medium text-gray-900 dark:text-white">
+            <div class="border-t border-border pt-6 mt-6">
+                 <div class="flex justify-between text-base font-medium text-text-base">
                     <p>Subtotal</p>
                     <p>$${subtotal.toFixed(2)}</p>
                 </div>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Impuestos y envío calculados en el checkout.</p>
+                <p class="mt-1 text-sm text-text-muted">Impuestos y envío calculados en el checkout.</p>
                 <div class="mt-6">
                     <button id="checkout-button"
-                            class="w-full flex items-center justify-center rounded-md border border-transparent bg-blue-industrial px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 dark:bg-blue-sky dark:hover:bg-blue-400 dark:text-purple-deep disabled:opacity-50 disabled:cursor-not-allowed">
+                            class="w-full flex items-center justify-center rounded-md border border-transparent bg-brand-blue px-6 py-3 text-base font-medium text-white shadow-sm 
+                                   hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
+                                   disabled:opacity-50 disabled:cursor-not-allowed">
                         Proceder al Pago (Placeholder)
                     </button>
                 </div>
-                 <div class="mt-6 flex justify-center text-center text-sm text-gray-500 dark:text-gray-400">
+                 <div class="mt-6 flex justify-center text-center text-sm text-text-muted">
                     <p>
-                        o <a href="/productos" class="font-medium text-blue-industrial dark:text-blue-sky hover:underline">Continuar Comprando<span aria-hidden="true"> &rarr;</span></a>
+                        o <a href="/productos" class="font-medium hover:underline">Continuar Comprando<span aria-hidden="true"> &rarr;</span></a>
                     </p>
                 </div>
             </div>

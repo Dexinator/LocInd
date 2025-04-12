@@ -20,38 +20,49 @@ const messagePlaceholder = productName
     <section class="py-16 md:py-24">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12 md:mb-16">
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 text-purple-deep dark:text-white">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 text-text-base">
                     Contáctanos
                 </h1>
-                <p class="text-lg md:text-xl text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+                <p class="text-lg md:text-xl text-text-muted max-w-2xl mx-auto">
                     ¿Tienes preguntas o estás listo para empezar? Nuestro equipo está aquí para ayudarte.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-5xl mx-auto">
                 {/* Formulario de Contacto */}
-                <div class="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-lg shadow-lg">
-                    <h2 class="text-2xl font-bold font-heading mb-6 text-gray-900 dark:text-white">Envíanos un Mensaje</h2>
-                    {/* TODO: Conectar esto a un servicio de envío (Netlify Forms, Formspree, API propia) */}
+                <div class="bg-background border border-border p-6 md:p-8 rounded-lg shadow-lg">
+                    <h2 class="text-2xl font-bold font-heading mb-6 text-text-base">Envíanos un Mensaje</h2>
                     <form action="#" method="POST" class="space-y-5">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre Completo</label>
-                            <input type="text" name="name" id="name" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-industrial focus:border-blue-industrial dark:bg-gray-700 dark:text-white" />
+                            <label for="name" class="block text-sm font-medium text-text-muted mb-1">Nombre Completo</label>
+                            <input type="text" name="name" id="name" required 
+                                   class="w-full px-4 py-2 bg-background border border-border rounded-md shadow-sm 
+                                          focus:ring-brand-blue focus:border-brand-blue text-text-base" />
                         </div>
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Correo Electrónico</label>
-                            <input type="email" name="email" id="email" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-industrial focus:border-blue-industrial dark:bg-gray-700 dark:text-white" />
+                            <label for="email" class="block text-sm font-medium text-text-muted mb-1">Correo Electrónico</label>
+                            <input type="email" name="email" id="email" required 
+                                   class="w-full px-4 py-2 bg-background border border-border rounded-md shadow-sm 
+                                          focus:ring-brand-blue focus:border-brand-blue text-text-base" />
                         </div>
                          <div>
-                            <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Teléfono <span class="text-xs text-gray-500">(Opcional)</span></label>
-                            <input type="tel" name="phone" id="phone" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-industrial focus:border-blue-industrial dark:bg-gray-700 dark:text-white" />
+                            <label for="phone" class="block text-sm font-medium text-text-muted mb-1">Teléfono <span class="text-xs text-gray-500">(Opcional)</span></label>
+                            <input type="tel" name="phone" id="phone" 
+                                   class="w-full px-4 py-2 bg-background border border-border rounded-md shadow-sm 
+                                          focus:ring-brand-blue focus:border-brand-blue text-text-base" />
                         </div>
                         <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje</label>
-                            <textarea name="message" id="message" rows="5" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-industrial focus:border-blue-industrial dark:bg-gray-700 dark:text-white">{messagePlaceholder}</textarea>
+                            <label for="message" class="block text-sm font-medium text-text-muted mb-1">Mensaje</label>
+                            <textarea name="message" id="message" rows="5" required 
+                                      class="w-full px-4 py-2 bg-background border border-border rounded-md shadow-sm 
+                                             focus:ring-brand-blue focus:border-brand-blue text-text-base">{messagePlaceholder}</textarea>
                         </div>
                         <div>
-                            <button type="submit" class="w-full bg-blue-industrial hover:bg-blue-700 dark:bg-blue-sky dark:hover:bg-blue-400 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
+                            {/* Botón Primario */}
+                            <button type="submit" 
+                                    class="w-full bg-brand-blue hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
+                                           text-white font-bold py-3 px-6 rounded-lg 
+                                           transition duration-300 ease-in-out shadow-lg transform hover:scale-105">
                                 Enviar Mensaje
                             </button>
                         </div>
@@ -61,46 +72,41 @@ const messagePlaceholder = productName
                 {/* Información de Contacto */}
                 <div class="space-y-8">
                      <div class="flex items-start gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 bg-blue-industrial/10 dark:bg-blue-sky/20 text-blue-industrial dark:text-blue-sky rounded-full flex items-center justify-center">
-                             {/* Icono Email */}
+                        <div class="flex-shrink-0 w-10 h-10 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Correo Electrónico</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Para consultas generales o soporte:</p>
-                            <a href={`mailto:${contactEmail}`} class="text-blue-industrial dark:text-blue-sky hover:underline">{contactEmail}</a>
+                            <h3 class="text-lg font-semibold text-text-base">Correo Electrónico</h3>
+                            <p class="text-text-muted">Para consultas generales o soporte:</p>
+                            {/* Enlace usa estilos base */}
+                            <a href={`mailto:${contactEmail}`} class="hover:underline">{contactEmail}</a>
                         </div>
                     </div>
                      <div class="flex items-start gap-4">
-                         <div class="flex-shrink-0 w-10 h-10 bg-blue-industrial/10 dark:bg-blue-sky/20 text-blue-industrial dark:text-blue-sky rounded-full flex items-center justify-center">
-                             {/* Icono Teléfono */}
+                         <div class="flex-shrink-0 w-10 h-10 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center">
                              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Teléfono</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Llámanos para una atención más directa:</p>
-                            <a href={`tel:${contactPhone.replace(/\s+/g, '')}`} class="text-blue-industrial dark:text-blue-sky hover:underline">{contactPhone}</a>
+                            <h3 class="text-lg font-semibold text-text-base">Teléfono</h3>
+                            <p class="text-text-muted">Llámanos para una atención más directa:</p>
+                            {/* Enlace usa estilos base */}
+                            <a href={`tel:${contactPhone.replace(/\s+/g, '')}`} class="hover:underline">{contactPhone}</a>
                         </div>
                     </div>
                      <div class="flex items-start gap-4">
-                         <div class="flex-shrink-0 w-10 h-10 bg-blue-industrial/10 dark:bg-blue-sky/20 text-blue-industrial dark:text-blue-sky rounded-full flex items-center justify-center">
-                            {/* Icono Ubicación */}
+                         <div class="flex-shrink-0 w-10 h-10 bg-brand-blue/10 text-brand-blue rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
                         </div>
                         <div>
-                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Ubicación</h3>
-                            <p class="text-gray-600 dark:text-gray-400">Nuestra oficina principal:</p>
-                            <p class="text-gray-600 dark:text-gray-400">{location}</p>
+                            <h3 class="text-lg font-semibold text-text-base">Ubicación</h3>
+                            <p class="text-text-muted">Nuestra oficina principal:</p>
+                            <p class="text-text-muted">{location}</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Placeholder para Mapa (Opcional) */}
-            {/* <div class="mt-16 rounded-lg overflow-hidden shadow-lg h-64 md:h-96 bg-gray-300 dark:bg-gray-700 flex items-center justify-center text-gray-500">
-                [Mapa Interactivo Placeholder]
-            </div> */}
         </div>
     </section>
 
-</BaseLayout> 
+</BaseLayout>
