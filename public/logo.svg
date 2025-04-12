@@ -1,4 +1,4 @@
-<svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" class="dark-mode-svg" style="background-color: transparent;">
+<svg viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg" class="dark-mode-svg" style="background-color: transparent;">
   <!-- Definición de gradientes -->
   <defs>
     <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -90,22 +90,24 @@
              repeatCount="indefinite"/>
   </circle>
 
+
+  
   <!-- Texto con la tipografía correcta - Clase para cambio automático en modo oscuro -->
-  <text x="400" y="180" 
+  <text x="430" y="190" 
         font-family="Montserrat, sans-serif" 
-        font-weight="900"
+        font-weight="bold"
         font-style="normal"
-        font-size="52" 
+        font-size="120" 
         fill="#3A1C71"
         class="logo-text-primary" 
         letter-spacing="2"
-        filter="dropShadow">RASTREO</text>
+        filter="dropShadow">LOCALIZACIÓN</text>
   
-  <text x="400" y="240" 
+  <text x="430" y="310" 
         font-family="Montserrat, sans-serif" 
-        font-weight="900"
+        font-weight="bold"
         font-style="normal"
-        font-size="52" 
+        font-size="120" 
         fill="#0277BD"
         class="logo-text-secondary" 
         letter-spacing="2"

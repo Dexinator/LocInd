@@ -5,6 +5,7 @@
 // O importar el contenido SVG directamente si queremos manipularlo con JS
 // import { Rellax } from 'rellax'; // Ejemplo si usamos Rellax para parallax
 import ThemeToggle from './ThemeToggle.astro';
+import Logo from './icons/Logo.astro';
 
 const navItems = [
     { name: 'Inicio', href: '/' },
@@ -16,20 +17,17 @@ const navItems = [
 ---
 
 <header class="sticky top-0 z-50 bg-background shadow-md transition-colors duration-300 ease-in-out border-b border-border">
-    <nav class="container mx-auto px-4 py-2 flex justify-between items-center">
+    <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
         <a href="/" class="flex items-center">
-            <!-- Insertar el SVG interactivo. Usar <object> permite que el JS/CSS interno funcione -->
-
-                <!-- Fallback por si <object> no carga -->
-                <img src="/logo.svg" alt="Localización Industrial Logo" class="h-10 md:h-12 lg:h-16 w-auto" />
-
-            <!-- <span class="ml-3 text-xl font-bold font-heading text-brand-purple">Localización Industrial</span> -->
-            <!-- El nombre puede estar ya en el SVG, si no, lo añadimos -->
+            <!-- Usando el componente Logo.astro -->
+            <div class="h-14 md:h-18 lg:h-22 mr-6">
+                <Logo />
+            </div>
         </a>
 
-        <div class="flex items-center space-x-4 md:space-x-6">
+        <div class="flex items-center space-x-3 md:space-x-5">
             <!-- Navegación Desktop -->
-            <ul class="hidden md:flex space-x-6">
+            <ul class="hidden md:flex space-x-4 lg:space-x-6">
                 {navItems.map((item) => (
                     <li>
                         <a href={item.href} class="text-text-base hover:text-brand-blue font-medium transition-colors">

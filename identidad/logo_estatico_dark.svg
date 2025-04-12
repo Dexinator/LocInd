@@ -1,13 +1,13 @@
 <svg viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3A1C71" />
+      <stop offset="0%" stop-color="#6A3FFF" />
       <stop offset="50%" stop-color="#0277BD" />
       <stop offset="100%" stop-color="#00B0FF" />
     </linearGradient>
     
     <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#3A1C71" />
+      <stop offset="0%" stop-color="#6A3FFF" />
       <stop offset="60%" stop-color="#0277BD" />
       <stop offset="100%" stop-color="#00B0FF" />
     </linearGradient>
@@ -57,7 +57,7 @@
         font-weight="bold"
         font-style="normal"
         font-size="120" 
-        fill="#3A1C71" 
+        fill="#D6C5FF" 
         letter-spacing="2"
         filter="dropShadow">LOCALIZACIÓN</text>
   
@@ -66,7 +66,7 @@
         font-weight="bold"
         font-style="normal"
         font-size="120" 
-        fill="#0277BD" 
+        fill="#80D8FF" 
         letter-spacing="2"
         filter="dropShadow">INDUSTRIAL</text>
-</svg>
+</svg> 

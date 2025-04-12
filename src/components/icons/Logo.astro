@@ -1,4 +1,8 @@
-<svg viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg" class="dark-mode-svg" style="background-color: transparent;">
+---
+// src/components/icons/Logo.astro
+---
+
+<svg viewBox="0 0 1500 500" xmlns="http://www.w3.org/2000/svg" class="h-full w-auto">
   <!-- Definición de gradientes -->
   <defs>
     <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -89,17 +93,14 @@
              dur="2s"
              repeatCount="indefinite"/>
   </circle>
-
-
   
-  <!-- Texto con la tipografía correcta - Clase para cambio automático en modo oscuro -->
+  <!-- Texto con la tipografía correcta - Versión tema claro por defecto -->
   <text x="430" y="190" 
         font-family="Montserrat, sans-serif" 
         font-weight="bold"
         font-style="normal"
         font-size="120" 
-        fill="#3A1C71"
-        class="logo-text-primary" 
+        class="text-primary-color"
         letter-spacing="2"
         filter="dropShadow">LOCALIZACIÓN</text>
   
@@ -108,27 +109,25 @@
         font-weight="bold"
         font-style="normal"
         font-size="120" 
-        fill="#0277BD"
-        class="logo-text-secondary" 
+        class="text-secondary-color"
         letter-spacing="2"
         filter="dropShadow">INDUSTRIAL</text>
-
-  <style>
-    @media (prefers-color-scheme: dark) {
-      .logo-text-primary {
-        fill: #D6C5FF !important;
-      }
-      .logo-text-secondary {
-        fill: #80D8FF !important;
-      }
-    }
-    
-    /* Soporte para Tailwind dark mode con JS */
-    :root.dark .logo-text-primary {
-      fill: #D6C5FF !important;
-    }
-    :root.dark .logo-text-secondary {
-      fill: #80D8FF !important;
-    }
-  </style>
 </svg>
+
+<style>
+  /* Colores para tema claro (por defecto) */
+  .text-primary-color {
+    fill: #3A1C71;
+  }
+  .text-secondary-color {
+    fill: #0277BD;
+  }
+  
+  /* Colores para tema oscuro */
+  :global(.dark) .text-primary-color {
+    fill: #D6C5FF;
+  }
+  :global(.dark) .text-secondary-color {
+    fill: #80D8FF;
+  }
+</style> 
