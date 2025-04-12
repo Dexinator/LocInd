@@ -12,7 +12,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 export async function getStaticPaths() {
     // Usar await getCollection para obtener entradas validadas por el schema
     const products = await getCollection('products');
-    return products.map(product => ({
+    return products.map((product: CollectionEntry<'products'>) => ({
         params: { slug: product.slug },
         props: { product },
     }));
@@ -40,24 +40,40 @@ const allImages = [image_link, ...(additional_image_link || [])];
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                 {/* Columna Izquierda: Galería de Imágenes */}
-                <div class="sticky top-24">
-                    {/* Placeholder para Galería de Imágenes */}
-                    {/* <ImageGallery images={allImages} /> */}
-                    <img src={image_link} alt={`Imagen principal de ${title}`} class="w-full rounded-lg shadow-lg mb-4 aspect-square object-cover border border-border" />
-                    {additional_image_link && additional_image_link.length > 0 && (
-                        <div class="grid grid-cols-4 gap-2">
-                            {additional_image_link.map(imgUrl => (
-                                <button class="block w-full rounded aspect-square object-cover cursor-pointer border-2 border-transparent 
-                                               hover:border-brand-blue focus:border-brand-blue 
-                                               transition overflow-hidden">
-                                    <img src={imgUrl} alt={`Vista adicional de ${title}`} class="w-full h-full object-cover"/>
-                                </button>
-                            ))}
+                <div class="md:sticky md:top-24">
+                    <div class="relative">
+                        {/* Imagen Principal */}
+                        <div class="w-full aspect-square rounded-lg shadow-lg overflow-hidden mb-4 border border-border">
+                            <img 
+                                src={image_link} 
+                                alt={`Imagen principal de ${title}`} 
+                                class="w-full h-full object-cover transition-transform duration-300"
+                            />
                         </div>
-                    )}
-                     {(!additional_image_link || additional_image_link.length === 0) && (
-                        <div class="text-sm text-text-muted italic mt-2">Más vistas próximamente.</div>
-                    )}
+
+                        {/* Imágenes Adicionales */}
+                        {additional_image_link && additional_image_link.length > 0 && (
+                            <div class="grid grid-cols-4 gap-2">
+                                {additional_image_link.map((imgUrl: string) => (
+                                    <button 
+                                        class="block w-full rounded aspect-square object-cover cursor-pointer border-2 border-transparent 
+                                               hover:border-brand-blue focus:border-brand-blue 
+                                               transition overflow-hidden"
+                                        onclick="changeMainImage(this)"
+                                    >
+                                        <img 
+                                            src={imgUrl} 
+                                            alt={`Vista adicional de ${title}`} 
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                        {(!additional_image_link || additional_image_link.length === 0) && (
+                            <div class="text-sm text-text-muted italic mt-2">Más vistas próximamente.</div>
+                        )}
+                    </div>
                 </div>
 
                 {/* Columna Derecha: Detalles del Producto y Compra */}
@@ -128,7 +144,7 @@ const allImages = [image_link, ...(additional_image_link || [])];
                         <div class="mb-8">
                             <h3 class="text-xl font-semibold font-heading mb-3 text-text-base">Características Clave</h3>
                             <ul class="list-disc list-inside space-y-1 text-text-muted pl-2">
-                                {features.map(feature => <li>{feature}</li>)}
+                                {features.map((feature: string) => <li>{feature}</li>)}
                             </ul>
                         </div>
                     )}
@@ -148,7 +164,7 @@ const allImages = [image_link, ...(additional_image_link || [])];
                             <div class="overflow-x-auto relative shadow-md sm:rounded-lg border border-border">
                                 <table class="w-full text-sm text-left text-text-muted">
                                     <tbody>
-                                        {specs.map((spec, index) => (
+                                        {specs.map((spec: { name: string; value: string }, index: number) => (
                                             <tr class:list={[
                                                 "border-b border-border",
                                                 index % 2 === 0 ? "bg-background" : "bg-background-alt"
@@ -167,6 +183,17 @@ const allImages = [image_link, ...(additional_image_link || [])];
             </div>
         </div>
     </article>
+
+    {/* Script para la galería de imágenes */}
+    <script>
+        function changeMainImage(button: HTMLButtonElement) {
+            const mainImage = document.querySelector('.w-full.aspect-square img') as HTMLImageElement;
+            const newImage = button.querySelector('img') as HTMLImageElement;
+            if (mainImage && newImage) {
+                mainImage.src = newImage.src;
+            }
+        }
+    </script>
 
     {/* Script para posible galería de imágenes o interacción del botón AddToCart */}
     <script>
