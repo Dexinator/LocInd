@@ -1,5 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+// Importamos las imágenes para los casos de éxito
+import monterreyImage from '../assets/images/casos/monterrey.jpg';
+import madridImage from '../assets/images/casos/madrid.jpg';
+import brazilImage from '../assets/images/casos/brazil.jpg';
 
 // Datos de los casos de éxito (podrían venir de MD o una colección si fueran muchos)
 const successCases = [
@@ -7,19 +13,19 @@ const successCases = [
         location: 'Monterrey, México',
         title: 'Optimización de Seguridad en Planta Industrial',
         description: 'Implementamos geovallas inteligentes y monitoreo en tiempo real para mejorar la seguridad en una planta de manufactura. La solución redujo incidentes en un 40% y optimizó la operatividad del personal.',
-        imagePlaceholder: '/images/placeholders/case-study-1.jpg'
+        image: monterreyImage
     },
     {
         location: 'Madrid, España',
         title: 'Gestión Avanzada de Flotas Logísticas',
         description: 'Nuestra tecnología de RTLS permitió a una empresa de logística mejorar la trazabilidad de sus vehículos y reducir tiempos de inactividad, logrando un aumento del 25% en la eficiencia operativa.',
-        imagePlaceholder: '/images/placeholders/case-study-2.jpg'
+        image: madridImage
     },
     {
         location: 'Amazonas, Brasil',
         title: 'Monitoreo de Activos en Operación Minera',
         description: 'Implementamos una solución de rastreo en tiempo real para maquinaria pesada en una operación minera, mejorando la eficiencia del mantenimiento y reduciendo costos operativos en un 30%.',
-        imagePlaceholder: '/images/placeholders/case-study-3.jpg'
+        image: brazilImage
     }
 ];
 ---
@@ -41,7 +47,17 @@ const successCases = [
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
                 {successCases.map((study, index) => (
                     <div class="bg-background border border-border rounded-lg shadow-lg overflow-hidden flex flex-col transform transition duration-300 hover:scale-[1.03] hover:shadow-xl">
-                        <img src={study.imagePlaceholder} alt={`Imagen representativa de ${study.title}`} class="w-full h-48 object-cover bg-background-alt"/>
+                        <div class="w-full h-48 overflow-hidden">
+                            <Image 
+                                src={study.image} 
+                                alt={`Caso de éxito en ${study.location}`}
+                                class="w-full h-full object-cover" 
+                                format="webp"
+                                quality={85}
+                                width={400}
+                                height={225}
+                            />
+                        </div>
                         <div class="p-6 flex flex-col flex-grow">
                             <span class="text-sm font-semibold text-brand-blue mb-1">{study.location}</span>
                             <h2 class="text-xl font-bold font-heading mb-3 text-text-base flex-grow">{study.title}</h2>

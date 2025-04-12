@@ -1,6 +1,12 @@
 ---
 // src/pages/como-funciona.astro
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+// Importamos las imágenes para "Cómo Funciona"
+import firstImage from '../assets/images/como_funciona/first.webp';
+import secondImage from '../assets/images/como_funciona/second.webp';
+import thirdImage from '../assets/images/como_funciona/third.webp';
 // Podríamos importar componentes específicos si la sección crece
 // import HowItWorksStep from '../components/HowItWorksStep.astro';
 ---
@@ -24,8 +30,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 {/* Paso 1: Celdas Virtuales y Anclas */}
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
-                        {/* Placeholder Imagen */}
-                        <img src="/images/placeholders/how-it-works-1.svg" alt="Ilustración de Anclas UWB creando celdas virtuales" class="rounded-lg shadow-lg w-full aspect-video object-cover bg-background-alt"/>
+                        <div class="rounded-lg shadow-lg overflow-hidden">
+                            <Image 
+                                src={firstImage} 
+                                alt="Instalación de Anclas UWB creando celdas virtuales"
+                                class="w-full aspect-video object-cover" 
+                                width={600}
+                                height={400}
+                                quality={85}
+                            />
+                        </div>
                     </div>
                     <div class="md:w-1/2">
                         <span class="inline-block bg-brand-blue/10 text-brand-blue text-sm font-semibold px-3 py-1 rounded-full mb-3">Paso 1</span>
@@ -39,8 +53,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 {/* Paso 2: Dispositivos RTLS */}
                 <div class="flex flex-col md:flex-row-reverse items-center gap-8">
                      <div class="md:w-1/2">
-                        {/* Placeholder Imagen */}
-                        <img src="/images/placeholders/how-it-works-2.svg" alt="Ilustración de dispositivos RTLS (tags) en objetos y personas" class="rounded-lg shadow-lg w-full aspect-video object-cover bg-background-alt"/>
+                        <div class="rounded-lg shadow-lg overflow-hidden">
+                            <Image 
+                                src={secondImage} 
+                                alt="Dispositivos RTLS (tags) instalados en objetos y personas"
+                                class="w-full aspect-video object-cover" 
+                                width={600}
+                                height={400}
+                                quality={85}
+                            />
+                        </div>
                     </div>
                     <div class="md:w-1/2">
                          <span class="inline-block bg-brand-blue/10 text-brand-blue text-sm font-semibold px-3 py-1 rounded-full mb-3">Paso 2</span>
@@ -54,8 +76,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 {/* Paso 3: Monitoreo y Análisis */}
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="md:w-1/2">
-                        {/* Placeholder Imagen */}
-                        <img src="/images/placeholders/how-it-works-3.svg" alt="Ilustración de plataforma software mostrando mapa y análisis" class="rounded-lg shadow-lg w-full aspect-video object-cover bg-background-alt"/>
+                        <div class="rounded-lg shadow-lg overflow-hidden">
+                            <Image 
+                                src={thirdImage} 
+                                alt="Plataforma software mostrando mapa de ubicación y análisis en tiempo real"
+                                class="w-full aspect-video object-cover" 
+                                width={600}
+                                height={400}
+                                quality={85}
+                            />
+                        </div>
                     </div>
                     <div class="md:w-1/2">
                         <span class="inline-block bg-brand-blue/10 text-brand-blue text-sm font-semibold px-3 py-1 rounded-full mb-3">Paso 3</span>
