@@ -1,27 +1,35 @@
-version: '3'
-
 services:
-  app:
+  frontend:
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
       - "80:80"
     restart: unless-stopped
-    
-  # Servicio para desarrollo (descomentar si lo necesitas)
-  # dev:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #     target: build-deps
-  #   command: pnpm run dev
-  #   ports:
-  #     - "4321:4321"
-  #   volumes:
-  #     - .:/app
-  #     - /app/node_modules
-  #   environment:
-  #     - HOST=0.0.0.0
-  #     - PORT=4321
-   
+    environment:
+      - PUBLIC_API_BASE_URL=http://localhost:3000
+      - PUBLIC_MERCADO_PAGO_PUBLIC_KEY=${MERCADOPAGO_PUBLIC_KEY}
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:3000/api/webhook}
+      - MERCADOPAGO_ACCESS_TOKEN=${MERCADOPAGO_ACCESS_TOKEN}
+      - MERCADOPAGO_PUBLIC_KEY=${MERCADOPAGO_PUBLIC_KEY}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 

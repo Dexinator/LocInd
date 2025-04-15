@@ -1,0 +1,138 @@
+---
+// src/pages/pago-exitoso.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="¡Pago Exitoso!" description="Tu pago ha sido procesado correctamente.">
+    <section class="py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <div class="max-w-2xl mx-auto bg-background border border-border rounded-lg shadow-lg p-8">
+                <div class="mb-6 text-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                
+                <h1 class="text-3xl md:text-4xl font-bold mb-4 text-text-base">
+                    ¡Pago Exitoso!
+                </h1>
+                
+                <p class="text-text-muted mb-6">
+                    Tu pago ha sido procesado correctamente. Recibirás un correo electrónico con los detalles de tu compra.
+                </p>
+                
+                <div id="payment-details" class="mb-8 bg-background-alt p-4 rounded-md max-w-md mx-auto text-left">
+                    <p class="font-medium text-text-base mb-2">Detalles de la transacción:</p>
+                    <div id="transaction-id" class="text-sm text-text-muted mb-1">ID de Transacción: <span id="payment-id">Procesando...</span></div>
+                    <div class="text-sm text-text-muted mb-1">Fecha: <span id="payment-date">Procesando...</span></div>
+                    <div class="text-sm text-text-muted">Monto: <span id="payment-amount">Procesando...</span></div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-center gap-4">
+                    <a href="/productos" class="inline-flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand-blue hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300">
+                        Seguir Comprando
+                    </a>
+                    <a href="/" class="inline-flex justify-center items-center px-6 py-3 border border-brand-blue rounded-md text-base font-medium text-brand-blue hover:bg-gray-50">
+                        Volver al Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+
+<script>
+    import { getPaymentStatus, PAYMENT_STATUS } from '../utils/mercadoPago.js';
+    
+    /**
+     * Obtiene un parámetro de la URL
+     * @param {string} param - Nombre del parámetro
+     * @returns {string|null} - Valor del parámetro o null si no existe
+     */
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+    
+    /**
+     * Formatea una fecha para mostrarla
+     * @param {string} dateString - Fecha en formato ISO
+     * @returns {string} - Fecha formateada
+     */
+    function formatDate(dateString) {
+        const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        } as Intl.DateTimeFormatOptions;
+        return new Date(dateString).toLocaleDateString('es-MX', options);
+    }
+    
+    /**
+     * Formatea un monto para mostrar
+     * @param {number} amount - Monto
+     * @returns {string} - Monto formateado
+     */
+    function formatAmount(amount) {
+        return `$${parseFloat(amount).toFixed(2)}`;
+    }
+    
+    /**
+     * Carga los detalles del pago desde la API
+     */
+    async function loadPaymentDetails() {
+        const paymentId = getQueryParam('payment_id');
+        const paymentIdElement = document.getElementById('payment-id');
+        const paymentDateElement = document.getElementById('payment-date');
+        const paymentAmountElement = document.getElementById('payment-amount');
+        
+        // Si no tenemos ID de pago, mostramos valores por defecto
+        if (!paymentId) {
+            if (paymentIdElement) paymentIdElement.textContent = 'No disponible';
+            if (paymentDateElement) paymentDateElement.textContent = new Date().toLocaleDateString('es-MX');
+            if (paymentAmountElement) paymentAmountElement.textContent = 'No disponible';
+            return;
+        }
+        
+        try {
+            // Consultar el estado del pago
+            const response = await getPaymentStatus(paymentId);
+            
+            // Verificar que la respuesta sea correcta y contenga datos
+            if (response.status === 'success' && response.data) {
+                const payment = response.data;
+                
+                // Verificar si el pago está aprobado
+                if (payment.status === PAYMENT_STATUS.APPROVED) {
+                    if (paymentIdElement) paymentIdElement.textContent = payment.id;
+                    if (paymentDateElement) paymentDateElement.textContent = formatDate(payment.date_created);
+                    if (paymentAmountElement) paymentAmountElement.textContent = formatAmount(payment.transaction_amount);
+                } else {
+                    // Si el pago no está aprobado, mostrar un mensaje de advertencia
+                    const detailsContainer = document.getElementById('payment-details');
+                    if (detailsContainer) {
+                        detailsContainer.innerHTML = `
+                            <div class="p-3 bg-yellow-100 text-yellow-800 rounded">
+                                <p class="font-medium">El pago está en estado: ${payment.status}</p>
+                                <p class="text-sm mt-1">Es posible que necesites contactar a atención al cliente.</p>
+                            </div>
+                        `;
+                    }
+                }
+            } else {
+                throw new Error('No se pudo obtener la información del pago');
+            }
+        } catch (error) {
+            console.error('Error al cargar detalles del pago:', error);
+            // Mostrar al menos el ID si lo tenemos
+            if (paymentIdElement) paymentIdElement.textContent = paymentId;
+            if (paymentDateElement) paymentDateElement.textContent = new Date().toLocaleDateString('es-MX');
+            if (paymentAmountElement) paymentAmountElement.textContent = 'No disponible';
+        }
+    }
+    
+    // Cargar detalles cuando el documento esté listo
+    document.addEventListener('DOMContentLoaded', loadPaymentDetails);
+</script> 

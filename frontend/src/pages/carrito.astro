@@ -112,12 +112,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                 </div>
                 <p class="mt-1 text-sm text-text-muted">Impuestos y envío calculados en el checkout.</p>
                 <div class="mt-6">
-                    <button id="checkout-button"
-                            class="w-full flex items-center justify-center rounded-md border border-transparent bg-brand-blue px-6 py-3 text-base font-medium text-white shadow-sm 
-                                   hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
-                                   disabled:opacity-50 disabled:cursor-not-allowed">
-                        Proceder al Pago (Placeholder)
-                    </button>
+                    <a href="/checkout" id="checkout-button"
+                       class="w-full flex items-center justify-center rounded-md border border-transparent bg-brand-blue px-6 py-3 text-base font-medium text-white shadow-sm 
+                              hover:bg-blue-industrial-600 dark:hover:bg-blue-industrial-300 
+                              disabled:opacity-50 disabled:cursor-not-allowed">
+                        Proceder al Pago
+                    </a>
                 </div>
                  <div class="mt-6 flex justify-center text-center text-sm text-text-muted">
                     <p>
@@ -162,9 +162,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         });
 
         const checkoutButton = document.getElementById('checkout-button');
-        checkoutButton?.addEventListener('click', () => {
-            console.log("Procediendo al pago con items:", getCartItems());
-            alert("Procediendo al pago (Integración Stripe pendiente)");
+        checkoutButton?.addEventListener('click', (e) => {
+            const items = getCartItems();
+            if (items.length === 0) {
+                e.preventDefault();
+                alert("Tu carrito está vacío. Agrega productos antes de continuar.");
+            } else {
+                console.log("Redirigiendo a checkout con items:", items);
+            }
         });
     }
 

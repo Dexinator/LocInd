@@ -1,0 +1,445 @@
+---
+// Definición del componente
+
+---
+
+<div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 mt-4">
+  <h2 class="text-xl font-semibold mb-4 text-center">Pagar con tarjeta</h2>
+  
+  <style>
+    #form-checkout {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+    }
+
+    .container {
+      height: 40px;
+      display: inline-block;
+      border: 1px solid rgb(118, 118, 118);
+      border-radius: 0.375rem;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.5rem;
+      width: 100%;
+    }
+  </style>
+  
+  <form id="form-checkout" class="space-y-4">
+    <div class="space-y-2">
+      <label for="form-checkout__cardNumber" class="block text-sm font-medium text-gray-700">Número de tarjeta</label>
+      <div id="form-checkout__cardNumber" class="container"></div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <label for="form-checkout__expirationDate" class="block text-sm font-medium text-gray-700">Fecha de vencimiento</label>
+        <div id="form-checkout__expirationDate" class="container"></div>
+      </div>
+      
+      <div class="space-y-2">
+        <label for="form-checkout__securityCode" class="block text-sm font-medium text-gray-700">Código de seguridad</label>
+        <div id="form-checkout__securityCode" class="container"></div>
+      </div>
+    </div>
+    
+    <div class="space-y-2">
+      <label for="form-checkout__cardholderName" class="block text-sm font-medium text-gray-700">Titular de la tarjeta</label>
+      <input type="text" id="form-checkout__cardholderName" class="h-10 px-3 py-2 border border-gray-300 rounded-md w-full" />
+    </div>
+    
+    <div class="space-y-2">
+      <label for="form-checkout__cardholderEmail" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+      <input type="email" id="form-checkout__cardholderEmail" class="h-10 px-3 py-2 border border-gray-300 rounded-md w-full" />
+    </div>
+    
+    <div class="space-y-2">
+      <label for="form-checkout__issuer" class="block text-sm font-medium text-gray-700">Banco emisor</label>
+      <select id="form-checkout__issuer" class="h-10 px-3 py-2 border border-gray-300 rounded-md w-full">
+        <option value="" disabled selected>Ingresa el número de tarjeta primero</option>
+      </select>
+    </div>
+    
+    <div class="space-y-2">
+      <label for="form-checkout__installments" class="block text-sm font-medium text-gray-700">Cuotas</label>
+      <select id="form-checkout__installments" class="h-10 px-3 py-2 border border-gray-300 rounded-md w-full">
+        <option value="" disabled selected>Selecciona un banco emisor primero</option>
+      </select>
+    </div>
+    
+    <div class="pt-4">
+      <button type="submit" id="form-checkout__submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Pagar
+      </button>
+    </div>
+    
+    <progress value="0" class="progress-bar w-full" style="display:none;">Cargando...</progress>
+  </form>
+  
+  <div id="payment-status" class="mt-4 text-center hidden">
+    <div id="payment-status-success" class="text-green-600 hidden">
+      <p class="font-medium">¡Pago procesado correctamente!</p>
+      <p class="text-sm">Recibirás una confirmación en tu correo.</p>
+    </div>
+    <div id="payment-status-error" class="text-red-600 hidden">
+      <p class="font-medium">Error al procesar el pago</p>
+      <p id="payment-status-error-message" class="text-sm"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    // Cargar el script de MercadoPago
+    if (typeof window.MercadoPago === 'undefined') {
+      console.log('Cargando SDK de Mercado Pago...');
+      const script = document.createElement('script');
+      script.src = 'https://sdk.mercadopago.com/js/v2';
+      script.onload = () => {
+        console.log('SDK de Mercado Pago cargado correctamente');
+        initMercadoPago();
+      };
+      script.onerror = (error) => {
+        console.error('Error al cargar SDK de Mercado Pago:', error);
+        showError("No se pudo cargar el formulario de pago. Por favor, intenta nuevamente más tarde.");
+      };
+      document.body.appendChild(script);
+    } else {
+      console.log('SDK de Mercado Pago ya está cargado');
+      initMercadoPago();
+    }
+  });
+
+  function initMercadoPago() {
+    // Inicializar Mercado Pago con la clave pública
+    const PUBLIC_KEY = import.meta.env.PUBLIC_MERCADO_PAGO_PUBLIC_KEY || '';
+    
+    console.log('Inicializando Mercado Pago con clave:', PUBLIC_KEY);
+    
+    if (!PUBLIC_KEY) {
+      console.error('La clave pública de Mercado Pago no está configurada');
+      showError("Error de configuración: Clave pública no disponible");
+      return;
+    }
+
+    try {
+      const mp = new window.MercadoPago(PUBLIC_KEY);
+      
+      // Obtener el monto total del carrito
+      const amount = getCartTotal();
+      
+      console.log('Monto del carrito:', amount);
+      
+      if (amount <= 0) {
+        console.warn('El monto del carrito es cero o inválido');
+        showError("El monto a pagar no es válido");
+        return;
+      }
+
+      // Obtener referencia a los elementos del formulario
+      const cardNumberElement = document.getElementById("form-checkout__cardNumber");
+      const issuerElement = document.getElementById("form-checkout__issuer") as HTMLSelectElement;
+      const installmentsElement = document.getElementById("form-checkout__installments") as HTMLSelectElement;
+      const formElement = document.getElementById("form-checkout");
+
+      // Crear el formulario de pago
+      console.log('Creando formulario de tarjeta...');
+      const cardForm = mp.cardForm({
+        amount: amount.toString(),
+        iframe: true,
+        form: {
+          id: "form-checkout",
+          cardNumber: {
+            id: "form-checkout__cardNumber",
+            placeholder: "Número de tarjeta",
+          },
+          expirationDate: {
+            id: "form-checkout__expirationDate",
+            placeholder: "MM/YY",
+          },
+          securityCode: {
+            id: "form-checkout__securityCode",
+            placeholder: "Código de seguridad",
+          },
+          cardholderName: {
+            id: "form-checkout__cardholderName",
+            placeholder: "Titular de la tarjeta",
+          },
+          issuer: {
+            id: "form-checkout__issuer",
+            placeholder: "Banco emisor",
+          },
+          installments: {
+            id: "form-checkout__installments",
+            placeholder: "Cuotas",
+          },
+          cardholderEmail: {
+            id: "form-checkout__cardholderEmail",
+            placeholder: "E-mail",
+          },
+        },
+        callbacks: {
+          onFormMounted: error => {
+            if (error) {
+              console.warn("Error al montar el formulario:", error);
+              showError("Error al cargar el formulario: " + (error.message || "Error desconocido"));
+              return;
+            }
+            console.log("Formulario montado correctamente");
+            hideProgress();
+          },
+          onBinChange: async (data) => {
+            console.log("Cambio de BIN detectado:", data);
+            if (data.bin && data.bin.length >= 6) {
+              try {
+                // Datos para consultar emisores
+                const paymentMethod = {
+                  bin: data.bin,
+                  paymentMethodId: data.paymentMethodId
+                };
+                
+                console.log('Consultando emisores para bin:', data.bin);
+                
+                // Consultar emisores disponibles
+                const issuersUrl = `https://api.mercadopago.com/v1/payment_methods/card_issuers?public_key=${PUBLIC_KEY}&payment_method_id=${paymentMethod.paymentMethodId}&bin=${paymentMethod.bin}`;
+                console.log('URL de consulta de emisores:', issuersUrl);
+                
+                const issuersResponse = await fetch(issuersUrl);
+                
+                if (!issuersResponse.ok) {
+                  const errorText = await issuersResponse.text();
+                  console.error(`Error al obtener emisores: ${issuersResponse.status} ${issuersResponse.statusText}`, errorText);
+                  throw new Error(`Error al obtener emisores: ${issuersResponse.status} ${issuersResponse.statusText}`);
+                }
+                
+                const issuers = await issuersResponse.json();
+                console.log("Emisores obtenidos:", issuers);
+
+                // Llenar el select de emisores
+                if (issuerElement && issuers && issuers.length) {
+                  // Limpiar opciones previas
+                  issuerElement.innerHTML = '';
+                  
+                  // Agregar opción default
+                  const defaultOption = document.createElement('option');
+                  defaultOption.value = '';
+                  defaultOption.textContent = 'Selecciona el banco emisor';
+                  defaultOption.disabled = true;
+                  defaultOption.selected = true;
+                  issuerElement.appendChild(defaultOption);
+                  
+                  // Agregar opciones de emisores
+                  issuers.forEach(issuer => {
+                    const option = document.createElement('option');
+                    option.value = issuer.id;
+                    option.textContent = issuer.name;
+                    issuerElement.appendChild(option);
+                  });
+                  
+                  console.log('Select de emisores actualizado con', issuers.length, 'opciones');
+                } else {
+                  console.warn('No se pudo actualizar el select de emisores:', { 
+                    issuerElement: !!issuerElement, 
+                    issuers: !!issuers, 
+                    length: issuers ? issuers.length : 0 
+                  });
+                }
+
+                // Cuando cambia el emisor, actualizar las cuotas
+                if (issuerElement) {
+                  issuerElement.addEventListener('change', async function() {
+                    try {
+                      const { paymentMethodId } = data;
+                      const issuerId = issuerElement.value;
+                      
+                      console.log('Cambio de emisor detectado:', issuerId);
+                      
+                      if (paymentMethodId && issuerId) {
+                        // Usar la API fetch para obtener las cuotas
+                        const installmentsUrl = `https://api.mercadopago.com/v1/payment_methods/installments?public_key=${PUBLIC_KEY}&amount=${amount.toString()}&bin=${data.bin}&payment_method_id=${paymentMethodId}&issuer.id=${issuerId}`;
+                        console.log("Consultando cuotas en URL:", installmentsUrl);
+                        
+                        const installmentsResponse = await fetch(installmentsUrl);
+                        
+                        if (!installmentsResponse.ok) {
+                          const errorText = await installmentsResponse.text();
+                          console.error(`Error al obtener cuotas: ${installmentsResponse.status} ${installmentsResponse.statusText}`, errorText);
+                          throw new Error(`Error al obtener cuotas: ${installmentsResponse.status} ${installmentsResponse.statusText}`);
+                        }
+                        
+                        const installmentsData = await installmentsResponse.json();
+                        console.log("Cuotas obtenidas:", installmentsData);
+                        
+                        // Llenar el select de cuotas
+                        if (installmentsElement && installmentsData && installmentsData[0] && installmentsData[0].payer_costs) {
+                          // Limpiar opciones previas
+                          installmentsElement.innerHTML = '';
+                          
+                          // Agregar opción default
+                          const defaultOption = document.createElement('option');
+                          defaultOption.value = '';
+                          defaultOption.textContent = 'Selecciona las cuotas';
+                          defaultOption.disabled = true;
+                          defaultOption.selected = true;
+                          installmentsElement.appendChild(defaultOption);
+                          
+                          // Agregar opciones de cuotas
+                          installmentsData[0].payer_costs.forEach(cost => {
+                            const option = document.createElement('option');
+                            option.value = cost.installments.toString();
+                            option.textContent = cost.recommended_message || `${cost.installments} cuotas`;
+                            installmentsElement.appendChild(option);
+                          });
+                          
+                          console.log('Select de cuotas actualizado con', installmentsData[0].payer_costs.length, 'opciones');
+                        } else {
+                          console.warn('No se pudo actualizar el select de cuotas');
+                        }
+                      }
+                    } catch (error) {
+                      console.error("Error al obtener cuotas:", error);
+                      showError("Error al cargar las cuotas disponibles. Por favor, intenta con otra tarjeta.");
+                    }
+                  });
+                }
+              } catch (error) {
+                console.error("Error al obtener emisores:", error);
+                showError("Error al cargar los bancos emisores. Por favor, intenta con otra tarjeta.");
+              }
+            }
+          },
+          onSubmit: event => {
+            event.preventDefault();
+            
+            // Mostrar el indicador de carga
+            showProgress();
+            
+            const cardFormData = cardForm.getCardFormData();
+            
+            // Enviar el token y datos al backend
+            fetch(`${import.meta.env.PUBLIC_API_BASE_URL || 'https://tu-app-backend.herokuapp.com'}/api/payment/create`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                token: cardFormData.token,
+                issuer_id: cardFormData.issuerId,
+                payment_method_id: cardFormData.paymentMethodId,
+                transaction_amount: parseFloat(cardFormData.amount),
+                installments: parseInt(cardFormData.installments),
+                description: "Compra en LocInd",
+                payer: {
+                  email: cardFormData.cardholderEmail,
+                  identification: {
+                    type: cardFormData.identificationType,
+                    number: cardFormData.identificationNumber
+                  }
+                }
+              }),
+            })
+            .then(response => response.json())
+            .then(result => {
+              hideProgress();
+              
+              if (result.status === 'success') {
+                showSuccess();
+                // Limpiar carrito
+                if (window.cartUtils && typeof window.cartUtils.clearCart === 'function') {
+                  window.cartUtils.clearCart();
+                }
+                // Redirigir a la página de éxito
+                setTimeout(() => {
+                  window.location.href = `/pago-exitoso${result.data?.id ? `?payment_id=${result.data.id}` : ''}`;
+                }, 2000);
+              } else {
+                showError(result.message || "Error al procesar el pago");
+              }
+            })
+            .catch(error => {
+              hideProgress();
+              console.error("Error en el procesamiento del pago:", error);
+              showError("Error de conexión. Por favor, intenta nuevamente.");
+            });
+          },
+          onFetching: (resource) => {
+            console.log("Fetching resource:", resource);
+            
+            showProgress();
+            
+            return () => {
+              hideProgress();
+            };
+          },
+          onError: (error) => {
+            console.error("CardForm error:", error);
+            showError("Error en el formulario: " + (error.message || "Error desconocido"));
+          }
+        },
+      });
+    } catch (error) {
+      console.error("Error al inicializar Mercado Pago:", error);
+      showError("Error al procesar el pago. Por favor, intenta nuevamente más tarde.");
+    }
+  }
+  
+  // Obtener el total del carrito
+  function getCartTotal() {
+    try {
+      if (window.cartUtils && typeof window.cartUtils.getCartSubtotal === 'function') {
+        return window.cartUtils.getCartSubtotal();
+      }
+    } catch (error) {
+      console.error('Error al obtener el total del carrito:', error);
+    }
+    return 0;
+  }
+
+  // Funciones helper para UI
+  function showProgress() {
+    const progressBar = document.querySelector('.progress-bar') as HTMLProgressElement;
+    const submitButton = document.getElementById('form-checkout__submit') as HTMLButtonElement;
+    
+    if (progressBar) progressBar.style.display = 'block';
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = 'Procesando...';
+    }
+  }
+  
+  function hideProgress() {
+    const progressBar = document.querySelector('.progress-bar') as HTMLProgressElement;
+    const submitButton = document.getElementById('form-checkout__submit') as HTMLButtonElement;
+    
+    if (progressBar) progressBar.style.display = 'none';
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Pagar';
+    }
+  }
+  
+  function showSuccess() {
+    const statusContainer = document.getElementById('payment-status');
+    const successStatus = document.getElementById('payment-status-success');
+    const errorStatus = document.getElementById('payment-status-error');
+    
+    if (statusContainer && successStatus && errorStatus) {
+      statusContainer.classList.remove('hidden');
+      successStatus.classList.remove('hidden');
+      errorStatus.classList.add('hidden');
+    }
+  }
+  
+  function showError(message) {
+    const statusContainer = document.getElementById('payment-status');
+    const successStatus = document.getElementById('payment-status-success');
+    const errorStatus = document.getElementById('payment-status-error');
+    const errorMessage = document.getElementById('payment-status-error-message');
+    
+    if (statusContainer && successStatus && errorStatus && errorMessage) {
+      statusContainer.classList.remove('hidden');
+      errorStatus.classList.remove('hidden');
+      successStatus.classList.add('hidden');
+      errorMessage.textContent = message;
+    }
+  }
+</script> 

@@ -7,6 +7,9 @@ export default defineConfig({
   integrations: [mdx()],
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ['mercadopago']
+    }
   },
   image: {
     service: {
