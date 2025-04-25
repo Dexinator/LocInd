@@ -1,0 +1,162 @@
+---
+// WhatsAppButton.astro - Componente para botón flotante de WhatsApp
+import { Image } from 'astro:assets';
+import backgroundImage from '../assets/background-whatsapp.jpg';
+---
+
+<div id="whatsapp-button" class="fixed bottom-6 right-6 z-50">
+  <!-- Botón principal -->
+  <button
+    id="whatsapp-toggle"
+    class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-lg transition-all duration-300"
+    aria-label="Abrir chat de WhatsApp"
+    aria-expanded="false"
+    aria-controls="whatsapp-chat"
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      class="h-6 w-6" 
+      fill="currentColor" 
+      viewBox="0 0 24 24"
+    >
+      <path 
+        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+      />
+    </svg>
+    <span>Contacta a nuestro equipo</span>
+  </button>
+
+  <!-- Ventana flotante de chat -->
+  <div 
+    id="whatsapp-chat" 
+    class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 scale-95 opacity-0"
+  >
+    <!-- Encabezado -->
+    <div class="bg-green-500 p-4 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden">
+        <img src="/favicon.svg" alt="Localización Industrial" class="w-8 h-8" />
+      </div>
+      <div>
+        <h3 class="text-white font-bold">Localización Industrial</h3>
+        <p class="text-green-100 text-sm">En línea</p>
+      </div>
+      <button id="whatsapp-close" class="ml-auto" aria-label="Cerrar chat">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Cuerpo del chat -->
+    <div class="p-4 bg-gray-100 relative min-h-[250px] flex flex-col justify-between">
+      <!-- Imagen de fondo -->
+      <div class="absolute inset-0 z-0 opacity-100">
+        <Image 
+          src={backgroundImage} 
+          alt="" 
+          class="w-full h-full object-cover"
+        />
+      </div>
+      <!-- Contenido del chat -->
+      <div class="relative z-10 flex flex-col space-y-4">
+        <!-- Fecha -->
+        <div class="text-center">
+          <span class="bg-white text-gray-500 text-xs px-2 py-1 rounded-lg shadow-sm">HOY</span>
+        </div>
+
+        <!-- Mensaje simulando chat de WhatsApp -->
+        <div class="max-w-[80%] bg-[#e7ffdb] p-3 rounded-tl-sm rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-sm relative">
+          <p class="text-gray-700">¡Hola! Gracias por contactar con <strong>Localización Industrial</strong></p>
+          <!-- Triángulo para simular burbuja de chat -->
+          <div class="absolute -left-2 top-2 w-0 h-0 border-t-8 border-r-8 border-b-0 border-l-0 border-[#e7ffdb]"></div>
+          <!-- Horario del mensaje -->
+          <span class="block text-right text-xs text-gray-500 mt-1">11:43</span>
+        </div>
+        
+        <!-- Segundo mensaje -->
+        <div class="max-w-[80%] bg-[#e7ffdb] p-3 rounded-tl-sm rounded-tr-lg rounded-br-lg rounded-bl-lg shadow-sm relative">
+          <p class="text-gray-700">¿En qué podemos ayudarte hoy?</p>
+          <!-- Triángulo para simular burbuja de chat -->
+          <div class="absolute -left-2 top-2 w-0 h-0 border-t-8 border-r-8 border-b-0 border-l-0 border-[#e7ffdb]"></div>
+          <!-- Horario del mensaje -->
+          <span class="block text-right text-xs text-gray-500 mt-1">11:44</span>
+        </div>
+      </div>
+      
+      <!-- Botón de acción -->
+      <div class="mt-4 relative z-10">
+        <a 
+          href="https://wa.me/5565337013" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="block w-full bg-green-500 text-white text-center py-3 rounded-lg font-medium hover:bg-green-600 transition-colors"
+        >
+          Empezar chat
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Esperamos a que el DOM esté completamente cargado
+  document.addEventListener('DOMContentLoaded', () => {
+    const whatsappToggle = document.getElementById('whatsapp-toggle');
+    const whatsappChat = document.getElementById('whatsapp-chat');
+    const whatsappClose = document.getElementById('whatsapp-close');
+    
+    // Función para abrir el chat
+    const openChat = () => {
+      // Mostrar el chat
+      whatsappChat?.classList.remove('hidden');
+      // Actualizar atributo ARIA
+      whatsappToggle?.setAttribute('aria-expanded', 'true');
+      // Darle tiempo al navegador para procesar la eliminación de 'hidden'
+      setTimeout(() => {
+        whatsappChat?.classList.remove('scale-95', 'opacity-0');
+        whatsappChat?.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    };
+    
+    // Función para cerrar el chat
+    const closeChat = () => {
+      // Ocultar con animación
+      whatsappChat?.classList.add('scale-95', 'opacity-0');
+      whatsappChat?.classList.remove('scale-100', 'opacity-100');
+      // Actualizar atributo ARIA
+      whatsappToggle?.setAttribute('aria-expanded', 'false');
+      // Esperar a que termine la transición antes de ocultar
+      setTimeout(() => {
+        whatsappChat?.classList.add('hidden');
+      }, 300);
+    };
+    
+    // Mostrar/ocultar el chat al hacer clic en el botón
+    whatsappToggle?.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita que el clic se propague al documento
+      if (whatsappChat?.classList.contains('hidden')) {
+        openChat();
+      } else {
+        closeChat();
+      }
+    });
+    
+    // Evitar que los clics dentro del chat cierren la ventana
+    whatsappChat?.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Cerrar el chat al hacer clic en el botón de cerrar
+    whatsappClose?.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita que el clic se propague al botón toggle
+      closeChat();
+    });
+    
+    // Cerrar el chat al hacer clic fuera de él
+    document.addEventListener('click', () => {
+      if (!whatsappChat?.classList.contains('hidden')) {
+        closeChat();
+      }
+    });
+  });
+</script> 

@@ -3,6 +3,7 @@
 import '../styles/global.css'; // Importaremos los estilos globales de Tailwind aquí
 import Header from '../components/Header.astro'; // Importar el Header real
 import Footer from '../components/Footer.astro'; // Importar el Footer real
+import WhatsAppButton from '../components/WhatsAppButton.astro'; // Importar el botón de WhatsApp
 import { SEO } from 'astro-seo';
 
 // Props que puede recibir el layout (ej. título de la página)
@@ -92,6 +93,7 @@ const isProd = import.meta.env.PROD;
 			<slot />
 		</main>
 		<Footer />
+		<WhatsAppButton />
 
         {isProd && (
             <script>
