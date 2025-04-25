@@ -1,6 +1,7 @@
 ---
-// Importamos CollectionEntry de astro:content si usamos colecciones
+// Importamos CollectionEntry de astro:content
 import type { CollectionEntry } from 'astro:content';
+import ProductImage from './ProductImage.astro';
 
 // Actualizamos la interfaz para esperar una CollectionEntry en lugar de MarkdownInstance
 // si usamos getCollection en la página que llama a este componente.
@@ -10,7 +11,7 @@ interface Props {
 
 const { product } = Astro.props;
 // Accedemos a los datos a través de .data y al slug/url a través del objeto principal
-const { title, description, image_link, availability, price } = product.data;
+const { title, description, image_filename, availability, price } = product.data;
 const url = `/productos/${product.slug}`; // Construimos la URL manualmente
 
 // Lógica para mostrar el precio o "Consultar"
@@ -18,44 +19,56 @@ const displayPrice = price === 'Consultar' ? 'Consultar' : `$${price.replace(' U
 const isConsultar = price === 'Consultar';
 ---
 
-<a href={url} 
-   class="group block bg-background border border-border rounded-lg shadow-md hover:shadow-xl overflow-hidden 
-          transition duration-300 ease-in-out transform hover:-translate-y-1 
-          hover:border-brand-blue/50">
-    <div class="relative w-full aspect-square overflow-hidden">
-        <img
-            src={image_link} 
-            alt={`Imagen de ${title}`}
-            class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
-            loading="lazy"
+<a href={url} class="group flex flex-col h-full rounded-lg overflow-hidden shadow-md border border-border transition-all 
+                   hover:shadow-lg hover:border-brand-blue/40 hover:scale-[1.01] dark:hover:border-brand-blue/40">
+    
+    {/* Imagen del Producto */}
+    <div class="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800">
+        <ProductImage 
+            filename={image_filename}
+            alt={title}
+            width={400}
+            height={400}
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+            format="webp"
+            quality={80}
         />
-        {/* Overlay opcional al hacer hover */}
-        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
+        
+        {/* Badge para disponibilidad */}
         {availability === 'out of stock' && (
-            <span class="absolute top-2 left-2 bg-error text-white text-xs font-semibold px-2 py-1 rounded z-10">Agotado</span>
+            <span class="absolute top-3 right-3 bg-error/80 text-white text-xs font-semibold px-2 py-1 rounded">
+                Agotado
+            </span>
         )}
-         {isConsultar && (
-            <span class="absolute top-2 right-2 bg-brand-purple text-white text-xs font-semibold px-2 py-1 rounded z-10">Servicio</span>
+        {isConsultar && (
+            <span class="absolute top-3 right-3 bg-brand-purple/80 text-white text-xs font-semibold px-2 py-1 rounded">
+                Bajo consulta
+            </span>
         )}
     </div>
-    <div class="p-4">
-        <h3 class="text-lg font-bold font-heading text-text-base mb-1 truncate group-hover:text-brand-blue transition-colors">
+    
+    {/* Información del Producto */}
+    <div class="flex flex-col flex-grow p-4 bg-background dark:bg-background">
+        <h3 class="text-lg font-bold font-heading mb-1 text-text-base group-hover:text-brand-blue dark:group-hover:text-brand-sky transition-colors">
             {title}
         </h3>
-        <p class="text-sm text-text-muted mb-3 min-h-[40px]">
-            {/* Descripción corta */}
-            {description.length > 80 ? description.substring(0, 80) + '...' : description}
+        
+        <p class="text-sm text-text-muted line-clamp-2 mb-3">
+            {description.length > 100 ? description.substring(0, 100) + '...' : description}
         </p>
-        <div class="flex justify-between items-center">
+        
+        <div class="mt-auto">
             <span class:list={[
-                "text-xl font-bold",
-                // Usamos brand-purple para Servicios (Consultar), brand-blue para productos con precio
+                "font-bold text-lg",
                 isConsultar ? "text-brand-purple" : "text-brand-blue"
             ]}>
                 {displayPrice}
             </span>
-            {/* Icono "Ver más" */}
-            <svg class="w-5 h-5 text-text-muted group-hover:text-brand-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+            
+            {/* CTA */}
+            <div class="mt-3 text-sm font-medium text-brand-blue dark:text-brand-sky">
+                Ver detalles <span class="ml-1 group-hover:ml-2 transition-all duration-300">→</span>
+            </div>
         </div>
     </div>
 </a> 

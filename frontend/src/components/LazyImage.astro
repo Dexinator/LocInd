@@ -1,0 +1,54 @@
+---
+// src/components/LazyImage.astro
+// Un componente que facilita la carga diferida y optimizada de imágenes
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string;  // Ruta a la imagen
+  alt: string;  // Texto alternativo (obligatorio para accesibilidad)
+  width: number; // Ancho original de la imagen
+  height: number; // Alto original de la imagen
+  sizes?: string; // Tamaños responsivos
+  class?: string; // Clases adicionales
+  loading?: 'eager' | 'lazy'; // Tipo de carga
+  fetchpriority?: 'high' | 'low' | 'auto'; // Prioridad de carga
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  sizes = '(max-width: 640px) 100vw, 50vw', 
+  class: className = '', 
+  loading = 'lazy',
+  fetchpriority = 'auto'
+} = Astro.props;
+
+// Determinar si la imagen es remota o local
+const isRemote = src.startsWith('http');
+---
+
+{isRemote ? (
+  <img 
+    src={src} 
+    alt={alt} 
+    width={width} 
+    height={height} 
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={`max-w-full h-auto transition-opacity duration-300 ${className}`}
+    sizes={sizes}
+  />
+) : (
+  <Image 
+    src={src} 
+    alt={alt} 
+    width={width} 
+    height={height} 
+    loading={loading}
+    fetchpriority={fetchpriority}
+    class={`max-w-full h-auto transition-opacity duration-300 ${className}`}
+    sizes={sizes}
+  />
+)} 

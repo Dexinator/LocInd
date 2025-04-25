@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+
+// Importar imágenes
+import SAFEA3 from '../assets/images/products/SAFEA-3.jpg';
+import SAFEO3 from '../assets/images/products/SAFEO-3.jpg';
+import SAFET3 from '../assets/images/products/SAFET-3.jpg';
+import SAFEV3 from '../assets/images/products/SAFEV-3.jpg';
+
+// Obtener props
+const { filename, alt, width = 600, height = 600, class: className = '', loading = 'lazy' } = Astro.props;
+
+// Seleccionar imagen
+let imageToShow;
+if (filename === 'SAFEA-3.jpg') imageToShow = SAFEA3;
+else if (filename === 'SAFEO-3.jpg') imageToShow = SAFEO3;
+else if (filename === 'SAFET-3.jpg') imageToShow = SAFET3;
+else if (filename === 'SAFEV-3.jpg') imageToShow = SAFEV3;
+---
+
+{imageToShow ? (
+  <Image 
+    src={imageToShow} 
+    alt={alt} 
+    width={width} 
+    height={height} 
+    class={className} 
+    loading={loading}
+    format="webp"
+  />
+) : (
+  <div class={`bg-gray-200 dark:bg-gray-700 flex items-center justify-center ${className} w-full h-full`}>
+    <span>Imagen no encontrada</span>
+  </div>
+)}

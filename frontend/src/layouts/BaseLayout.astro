@@ -3,25 +3,70 @@
 import '../styles/global.css'; // Importaremos los estilos globales de Tailwind aquí
 import Header from '../components/Header.astro'; // Importar el Header real
 import Footer from '../components/Footer.astro'; // Importar el Footer real
+import { SEO } from 'astro-seo';
 
 // Props que puede recibir el layout (ej. título de la página)
 interface Props {
 	title: string;
     description?: string; // Opcional para meta descripción
+    image?: string; // Para compartir en redes sociales
+    canonicalURL?: string;
 }
 
-const { title, description = 'Localización Industrial - Precisión que transforma la industria' } = Astro.props;
+const { 
+    title, 
+    description = 'Localización Industrial - Precisión que transforma la industria',
+    image = '/og-image.jpg',  // imagen por defecto
+    canonicalURL = Astro.url.href 
+} = Astro.props;
+
+// Verificar si estamos en producción
+const isProd = import.meta.env.PROD;
 ---
 
 <!doctype html>
 <html lang="es" class="scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title} | Localización Industrial</title>
+		
+        <SEO
+            title={`${title} | Localización Industrial`}
+            description={description}
+            canonical={canonicalURL}
+            openGraph={{
+                basic: {
+                    title: `${title} | Localización Industrial`,
+                    type: "website",
+                    image: image,
+                },
+                optional: {
+                    description: description,
+                    siteName: "Localización Industrial",
+                    locale: "es_MX",
+                }
+            }}
+            twitter={{
+                card: "summary_large_image",
+                site: "@locualizacionindustrial",
+                title: `${title} | Localización Industrial`,
+                description: description,
+                image: image,
+                imageAlt: "Localización Industrial logo",
+            }}
+            extend={{
+                link: [
+                    { rel: "icon", href: "/favicon.ico" },
+                    { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+                    { rel: "manifest", href: "/manifest.webmanifest" }
+                ],
+                meta: [
+                    { name: "theme-color", content: "#5E35B1" },
+                ]
+            }}
+        />
 
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,12 +86,30 @@ const { title, description = 'Localización Industrial - Precisión que transfor
             }
         </script>
 	</head>
-	<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300 ease-in-out flex flex-col min-h-screen">
-		<Header /> {/* Usar el componente Header */}
-		<main class="container mx-auto px-4 py-8 flex-grow">
-            {/* El contenido específico de cada página se insertará aquí */}
+	<body class="min-h-screen flex flex-col bg-background-light dark:bg-background-dark text-text-base dark:text-text-light transition-colors duration-100">
+		<Header />
+		<main class="flex-grow">
 			<slot />
 		</main>
-        <Footer /> {/* Usar el componente Footer */}
+		<Footer />
+
+        {isProd && (
+            <script>
+                import { registerSW } from 'virtual:pwa-register';
+                
+                // Este register devuelve una función que refresca periódicamente el Service Worker
+                const updateSW = registerSW({
+                    onNeedRefresh() {
+                        const confirmed = confirm('Nueva versión disponible. ¿Actualizar ahora?');
+                        if (confirmed) {
+                            updateSW(true);
+                        }
+                    },
+                    onOfflineReady() {
+                        console.log('La aplicación está lista para uso sin conexión');
+                    }
+                });
+            </script>
+        )}
 	</body>
 </html> 

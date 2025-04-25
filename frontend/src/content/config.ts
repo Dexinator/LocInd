@@ -7,8 +7,8 @@ const productsCollection = defineCollection({
         id: z.string(),
         title: z.string(),
         description: z.string(),
-        image_link: z.string(),
-        additional_image_link: z.array(z.string()).optional(), // Array de strings, opcional
+        image_filename: z.string(),
+        additional_image_filenames: z.array(z.string()).optional(),
         availability: z.enum(['in stock', 'out of stock', 'preorder']), // Valores permitidos
         price: z.string(), // Mantener como string para manejar "Consultar"
         brand: z.string().optional(),

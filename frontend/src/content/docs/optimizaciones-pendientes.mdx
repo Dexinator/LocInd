@@ -1,0 +1,73 @@
+---
+title: 'Optimizaciones Pendientes'
+description: 'Guía de optimizaciones pendientes para el sitio de LocInd'
+date: '2024-04-25'
+---
+
+# Optimizaciones Pendientes
+
+Este documento contiene las tareas pendientes para lograr un sitio completamente optimizado para producción en Vercel.
+
+## 1. Crear Íconos PWA
+
+Para completar la funcionalidad PWA, debes crear los siguientes íconos:
+
+- `public/pwa-192x192.png` - (Ícono principal en 192x192px)
+- `public/pwa-512x512.png` - (Ícono grande en 512x512px)
+- `public/apple-touch-icon.png` - (Ícono para dispositivos Apple en 180x180px)
+
+Estos íconos deben mantener la identidad visual de la marca y serán utilizados cuando los usuarios instalen la aplicación en sus dispositivos.
+
+## 2. Actualizar Dominios
+
+Reemplaza las URLs de ejemplo con tu dominio real en estos archivos:
+
+- `frontend/vercel.json` - Reemplaza "https://tudominio.com"
+- `frontend/astro.config.mjs` - Reemplaza "https://tudominio.com"
+- `frontend/public/robots.txt` - Actualiza la URL del sitemap
+
+## 3. Optimizar Imágenes
+
+Para mejorar el rendimiento de carga:
+
+- Utiliza el componente `<LazyImage />` creado para cargar imágenes de forma diferida
+- Convierte las imágenes existentes a formatos modernos (WebP o AVIF)
+- Establece dimensiones explícitas en todas las imágenes para evitar CLS (Cumulative Layout Shift)
+- Prioriza la carga de imágenes críticas con `fetchpriority="high"`
+
+```astro
+// Ejemplo de uso de LazyImage
+<LazyImage 
+  src="/ruta/a/imagen.webp" 
+  alt="Descripción de la imagen" 
+  width={800} 
+  height={600} 
+  fetchpriority={esImagenCritica ? "high" : "auto"}
+/>
+```
+
+## 4. Validar Optimizaciones
+
+Una vez implementadas todas las mejoras, verifica el rendimiento con las siguientes herramientas:
+
+- **Lighthouse** (desde Chrome DevTools): Evalúa Performance, Accesibilidad, PWA, SEO y Buenas Prácticas
+- **PageSpeed Insights**: https://pagespeed.web.dev/ para medir Core Web Vitals
+- **PWA Builder**: https://www.pwabuilder.com/ para validar la implementación PWA
+- **Webhint**: https://webhint.io/ para verificar otras mejores prácticas
+
+## 5. Optimizaciones Específicas de Vercel
+
+Aprovecha las características de Vercel para mejorar aún más el rendimiento:
+
+- Activa Automatic Image Optimization en la configuración del proyecto
+- Considera usar Edge Functions para mejor rendimiento global
+- Verifica las analíticas de rendimiento en el panel de Vercel
+
+## 6. Mantenimiento Continuo
+
+Establece un proceso para mantener las optimizaciones:
+
+- Revisa periódicamente el reporte Lighthouse (mensualmente)
+- Actualiza dependencias para mantener la seguridad y rendimiento
+- Monitorea Core Web Vitals en Google Search Console
+- Analiza el comportamiento de usuarios reales con RUM (Real User Monitoring) 

@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductImage from '../../components/ProductImage.astro';
 // Importar un componente para la galería de imágenes si es necesario
 // import ImageGallery from '../../components/ImageGallery.astro';
 // Importar el componente para el botón de compra (lo crearemos más adelante)
@@ -26,13 +27,13 @@ type Props = {
 const { product } = Astro.props;
 const { Content } = await product.render(); // Renderizar el contenido Markdown/MDX
 // Acceder a los datos validados a través de product.data
-const { id, title, description, image_link, additional_image_link, availability, price, features, specs, brand } = product.data;
+const { id, title, description, image_filename, additional_image_filenames, availability, price, features, specs, brand } = product.data;
 
 const displayPrice = price === 'Consultar' ? 'Consultar' : `$${price.replace(' USD', '')}`;
 const isConsultar = price === 'Consultar';
 const isAvailable = availability === 'in stock';
 
-const allImages = [image_link, ...(additional_image_link || [])];
+const allImages = [image_filename, ...(additional_image_filenames || [])];
 ---
 
 <BaseLayout title={title} description={description.substring(0, 160)}> {/* Meta descripción corta */}
@@ -44,33 +45,44 @@ const allImages = [image_link, ...(additional_image_link || [])];
                     <div class="relative">
                         {/* Imagen Principal */}
                         <div class="w-full aspect-square rounded-lg shadow-lg overflow-hidden mb-4 border border-border">
-                            <img 
-                                src={image_link} 
+                            <ProductImage 
+                                filename={image_filename}
                                 alt={`Imagen principal de ${title}`} 
+                                width={600}
+                                height={600}
                                 class="w-full h-full object-cover transition-transform duration-300"
+                                loading="eager"
+                                quality={90}
+                                format="webp"
                             />
                         </div>
 
                         {/* Imágenes Adicionales */}
-                        {additional_image_link && additional_image_link.length > 0 && (
+                        {additional_image_filenames && additional_image_filenames.length > 0 && (
                             <div class="grid grid-cols-4 gap-2">
-                                {additional_image_link.map((imgUrl: string) => (
+                                {additional_image_filenames.map((filename, index) => (
                                     <button 
                                         class="block w-full rounded aspect-square object-cover cursor-pointer border-2 border-transparent 
                                                hover:border-brand-blue focus:border-brand-blue 
                                                transition overflow-hidden"
-                                        onclick="changeMainImage(this)"
+                                        data-index={index}
+                                        id={`thumbnail-${index}`}
+                                        data-filename={filename}
                                     >
-                                        <img 
-                                            src={imgUrl} 
-                                            alt={`Vista adicional de ${title}`} 
+                                        <ProductImage 
+                                            filename={filename}
+                                            alt={`Vista adicional ${index + 1} de ${title}`} 
+                                            width={150}
+                                            height={150}
                                             class="w-full h-full object-cover"
+                                            loading="lazy"
+                                            format="webp"
                                         />
                                     </button>
                                 ))}
                             </div>
                         )}
-                        {(!additional_image_link || additional_image_link.length === 0) && (
+                        {(!additional_image_filenames || additional_image_filenames.length === 0) && (
                             <div class="text-sm text-text-muted italic mt-2">Más vistas próximamente.</div>
                         )}
                     </div>
@@ -118,7 +130,7 @@ const allImages = [image_link, ...(additional_image_link || [])];
                                 data-product-id={id}
                                 data-product-name={title}
                                 data-product-price={price.replace(' USD', '')}
-                                data-product-image={image_link}
+                                data-product-image={`/assets/images/products/${image_filename}`}
                                 data-product-url={Astro.url.pathname}
                                 >
                                 Añadir al Carrito
@@ -178,93 +190,72 @@ const allImages = [image_link, ...(additional_image_link || [])];
                             </div>
                         </div>
                     )}
-
                 </div>
             </div>
         </div>
     </article>
 
     {/* Script para la galería de imágenes */}
-    <script>
-        function changeMainImage(button: HTMLButtonElement) {
-            const mainImage = document.querySelector('.w-full.aspect-square img') as HTMLImageElement;
-            const newImage = button.querySelector('img') as HTMLImageElement;
-            if (mainImage && newImage) {
-                mainImage.src = newImage.src;
-            }
-        }
-    </script>
-
-    {/* Script para posible galería de imágenes o interacción del botón AddToCart */}
-    <script>
-        import { addToCart } from '../../utils/cart.js'; // Importar la función
-
-        // Ejemplo: Cambiar imagen principal al hacer clic en miniatura
-        const mainImage = document.querySelector('img[alt^="Imagen principal"]');
-        const thumbnailButtons = document.querySelectorAll('button[class*="aspect-square"]');
-
-        thumbnailButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const imgInside = button.querySelector('img');
-                if (mainImage instanceof HTMLImageElement && imgInside instanceof HTMLImageElement) {
-                    mainImage.src = imgInside.src;
-                }
+    <script define:vars={{ title }}>
+        // Script para cambiar la imagen principal al hacer clic en las miniaturas
+        document.addEventListener('DOMContentLoaded', () => {
+            const thumbnails = document.querySelectorAll('[id^="thumbnail-"]');
+            const mainImageContainer = document.querySelector('.w-full.aspect-square');
+            
+            if (!mainImageContainer || thumbnails.length === 0) return;
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    // Obtener el nombre de archivo de la imagen de la miniatura
+                    const filename = thumbnail.getAttribute('data-filename');
+                    if (!filename) return;
+                    
+                    // Buscar la imagen principal y cambiarla
+                    const mainProductImage = mainImageContainer.querySelector('img');
+                    if (mainProductImage) {
+                        // Obtener la ruta base de la imagen actual
+                        const currentSrc = mainProductImage.src;
+                        const basePath = currentSrc.substring(0, currentSrc.lastIndexOf('/') + 1);
+                        
+                        // Cambiar a la nueva imagen
+                        mainProductImage.src = `${basePath}${filename}`;
+                        mainProductImage.alt = `Vista ampliada de ${document.querySelector('h1')?.textContent || title}`;
+                    }
+                });
             });
         });
+    </script>
 
-        // Lógica actualizada para el botón "Añadir al Carrito"
-        const addToCartButton = document.getElementById('add-to-cart-button');
-
-        // Asegurar que el elemento es un botón antes de añadir el listener
-        if (addToCartButton instanceof HTMLButtonElement) {
-            addToCartButton.addEventListener('click', () => {
-                const button = addToCartButton; // Ya sabemos que es HTMLButtonElement
-                
-                // Validar que los dataset no sean undefined antes de usarlos
-                const productId = button.dataset.productId;
-                const productName = button.dataset.productName;
-                const productPriceStr = button.dataset.productPrice;
-                const productImage = button.dataset.productImage;
-                const productUrl = button.dataset.productUrl;
-
-                if (!productId || !productName || !productPriceStr || !productImage || !productUrl) {
-                     console.error("Faltan datos del producto en los atributos data-* del botón.");
-                     alert("Error al añadir el producto al carrito (faltan datos).");
-                     return;
-                }
-
-                const price = parseFloat(productPriceStr);
-                if (isNaN(price)) {
-                    console.error("Precio del producto inválido", productPriceStr);
-                    alert("Error al añadir el producto al carrito (precio inválido).");
-                    return;
-                }
-
-                const newItem = {
-                    id: productId,
-                    name: productName,
-                    price: price,
-                    image: productImage,
-                    url: productUrl,
-                    quantity: 1 
-                };
-
-                addToCart(newItem);
-
-                // Feedback visual
-                button.textContent = 'Añadido!';
-                button.disabled = true;
-                setTimeout(() => {
-                    // Verificar si el botón todavía existe antes de re-habilitarlo
-                    const currentButtonState = document.getElementById('add-to-cart-button');
-                    if (currentButtonState instanceof HTMLButtonElement) {
-                         currentButtonState.textContent = 'Añadir al Carrito';
-                         currentButtonState.disabled = false;
+    {/* Script para el botón AddToCart */}
+    <script>
+        import { addToCart } from '../../utils/cart.js'; // Importar la función
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const addToCartButton = document.getElementById('add-to-cart-button');
+            
+            if (addToCartButton) {
+                addToCartButton.addEventListener('click', () => {
+                    const productId = addToCartButton.getAttribute('data-product-id') || '';
+                    const productName = addToCartButton.getAttribute('data-product-name') || '';
+                    const productPrice = parseFloat(addToCartButton.getAttribute('data-product-price') || '0');
+                    const productImage = addToCartButton.getAttribute('data-product-image') || '';
+                    const productUrl = addToCartButton.getAttribute('data-product-url') || '';
+                    
+                    if (productId && productName && !isNaN(productPrice)) {
+                        addToCart({ 
+                            id: productId, 
+                            name: productName, 
+                            price: productPrice,
+                            image: productImage,
+                            url: productUrl,
+                            quantity: 1 
+                        });
+                        
+                        // Mostrar feedback al usuario
+                        alert(`¡${productName} añadido al carrito!`);
                     }
-                }, 1500);
-            });
-        } else if (addToCartButton) {
-            console.warn("El elemento con id 'add-to-cart-button' no es un botón.");
-        }
+                });
+            }
+        });
     </script>
 </BaseLayout> 

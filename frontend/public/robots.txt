@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Excluir rutas de administración o privadas
+Disallow: /admin/
+Disallow: /*?preview=*
+
+# Sitemap para mejorar el rastreo
+Sitemap: https://localizacion-industrial.com/sitemap-index.xml 
