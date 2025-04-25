@@ -1,8 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../sections/hero.astro';
+import { Image } from 'astro:assets';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+
+// Importación de imagen
+import processImage from '../assets/images/process.webp';
 ---
 
 <BaseLayout title="Inicio" description="Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.">
@@ -47,7 +51,14 @@ import Hero from '../sections/hero.astro';
     <section class="py-16 md:py-24 bg-background-alt border-t border-border">
         <div class="container mx-auto px-4 text-center">
              <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12 text-text-base">Cómo Funciona</h2>
-             <p class="text-lg text-text-muted max-w-3xl mx-auto mb-8">Placeholder explicando brevemente el proceso (Anclas -> Tags -> Plataforma).</p>
+             <Image 
+                src={processImage} 
+                alt="Proceso de localización: Anclas, Tags y Plataforma" 
+                class="max-w-3xl w-full mx-auto rounded-lg mb-8 shadow-md"
+                width={800}
+                height={450}
+                quality={80}
+             />
              {/* Enlace usa estilos base de global.css */}
              <a href="/como-funciona" class="font-semibold hover:underline">Saber más -></a>
         </div>
