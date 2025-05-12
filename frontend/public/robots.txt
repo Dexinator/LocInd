@@ -4,6 +4,12 @@ Allow: /
 # Excluir rutas de administración o privadas
 Disallow: /admin/
 Disallow: /*?preview=*
+Disallow: /carrito
+Disallow: /checkout
+Disallow: /pago-exitoso
+
+# Retrasar el rastreo para evitar sobrecargas
+Crawl-delay: 10
 
 # Sitemap para mejorar el rastreo
 Sitemap: https://localizacion-industrial.com/sitemap-index.xml 

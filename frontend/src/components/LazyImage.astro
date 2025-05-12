@@ -4,14 +4,15 @@
 import { Image } from 'astro:assets';
 
 interface Props {
-  src: string;  // Ruta a la imagen
-  alt: string;  // Texto alternativo (obligatorio para accesibilidad)
-  width: number; // Ancho original de la imagen
-  height: number; // Alto original de la imagen
-  sizes?: string; // Tamaños responsivos
-  class?: string; // Clases adicionales
-  loading?: 'eager' | 'lazy'; // Tipo de carga
-  fetchpriority?: 'high' | 'low' | 'auto'; // Prioridad de carga
+  src: any;
+  alt: string;
+  width: number;
+  height: number;
+  class?: string;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  quality?: number;
+  format?: 'webp' | 'avif' | 'png' | 'jpeg';
 }
 
 const { 
@@ -19,36 +20,99 @@ const {
   alt, 
   width, 
   height, 
-  sizes = '(max-width: 640px) 100vw, 50vw', 
-  class: className = '', 
+  class: className = '',
+  sizes = '',
   loading = 'lazy',
-  fetchpriority = 'auto'
+  quality = 80,
+  format = 'webp'
 } = Astro.props;
 
 // Determinar si la imagen es remota o local
 const isRemote = src.startsWith('http');
 ---
 
-{isRemote ? (
-  <img 
-    src={src} 
-    alt={alt} 
-    width={width} 
-    height={height} 
+<div class={`image-wrapper ${className}`}>
+  <Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
     loading={loading}
-    fetchpriority={fetchpriority}
-    class={`max-w-full h-auto transition-opacity duration-300 ${className}`}
+    quality={quality}
+    format={format}
     sizes={sizes}
   />
-) : (
-  <Image 
-    src={src} 
-    alt={alt} 
-    width={width} 
-    height={height} 
-    loading={loading}
-    fetchpriority={fetchpriority}
-    class={`max-w-full h-auto transition-opacity duration-300 ${className}`}
-    sizes={sizes}
-  />
-)} 
+</div>
+
+<style>
+  .image-wrapper {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  /* Para imágenes que deben tener proporción fija */
+  .image-wrapper.aspect-ratio {
+    height: 0;
+    padding-bottom: var(--aspect-ratio, 56.25%); /* Default 16:9 */
+  }
+
+  .image-wrapper.aspect-ratio img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Efecto de fade-in al cargar */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .image-wrapper img {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  /* Placeholder para imágenes */
+  .image-wrapper::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    z-index: -1;
+  }
+</style>
+
+<!--
+EJEMPLO DE USO:
+
+```astro
+<LazyImage
+  src={import('../assets/images/example.jpg')}
+  alt="Descripción detallada de la imagen"
+  width={800}
+  height={600}
+  class="rounded-lg aspect-ratio"
+  style="--aspect-ratio: 75%"
+  sizes="(max-width: 768px) 100vw, 50vw"
+/>
+```
+
+OPCIONES AVANZADAS:
+
+1. Para imágenes con proporción fija, usa la clase "aspect-ratio" y define
+   la proporción con la variable CSS --aspect-ratio:
+   style="--aspect-ratio: 75%" (proporción 4:3)
+
+2. Para imágenes responsivas, usa el atributo "sizes":
+   sizes="(max-width: 768px) 100vw, 50vw"
+
+3. Prioriza la carga de imágenes importantes con loading="eager"
+--> 

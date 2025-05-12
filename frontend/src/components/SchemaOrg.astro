@@ -1,0 +1,21 @@
+---
+// Schema.org structured data component
+interface Props {
+  type: 'Organization' | 'LocalBusiness' | 'Product' | 'WebPage' | 'BreadcrumbList';
+  data: any;
+}
+
+const { type, data } = Astro.props;
+
+// Base schema with common requirements
+const baseSchema = {
+  '@context': 'https://schema.org',
+  '@type': type,
+  ...data
+};
+
+// Convert to JSON string
+const schemaString = JSON.stringify(baseSchema);
+---
+
+<script type="application/ld+json" set:html={schemaString} /> 

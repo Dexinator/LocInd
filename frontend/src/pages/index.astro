@@ -2,14 +2,41 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../sections/hero.astro';
 import { Image } from 'astro:assets';
+import SchemaOrg from '../components/SchemaOrg.astro';
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 
 // Importación de imagen
 import processImage from '../assets/images/process.webp';
+
+// Datos estructurados para la página
+const organizationData = {
+  name: "Localización Industrial",
+  url: "https://localizacion-industrial.com",
+  logo: "https://localizacion-industrial.com/logo.svg",
+  description: "Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.",
+  sameAs: [
+    "https://www.facebook.com/localizacionindustrial",
+    "https://www.linkedin.com/company/localizacionindustrial"
+  ]
+};
+
+const pageData = {
+  "@id": "https://localizacion-industrial.com/#webpage",
+  url: "https://localizacion-industrial.com/",
+  name: "Localización Industrial | Geolocalización para la Industria",
+  description: "Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.",
+  isPartOf: {
+    "@id": "https://localizacion-industrial.com/#website"
+  }
+};
+
 ---
 
 <BaseLayout title="Inicio" description="Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.">
+
+    <SchemaOrg type="Organization" data={organizationData} />
+    <SchemaOrg type="WebPage" data={pageData} />
 
     {/* Hero Section */}
     <Hero />

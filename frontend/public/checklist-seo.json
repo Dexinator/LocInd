@@ -1,0 +1,50 @@
+{
+  "seo_checklist": {
+    "meta_tags": {
+      "title": true,
+      "description": true,
+      "viewport": true,
+      "robots": true,
+      "canonical": true
+    },
+    "open_graph": {
+      "title": true,
+      "description": true,
+      "image": true,
+      "url": true,
+      "type": true,
+      "site_name": true
+    },
+    "twitter_cards": {
+      "card": true,
+      "site": true,
+      "title": true,
+      "description": true,
+      "image": true
+    },
+    "structured_data": {
+      "organization": true,
+      "webpage": true,
+      "breadcrumbs": false
+    },
+    "performance": {
+      "images_optimized": true,
+      "responsive_images": true,
+      "lazy_loading": false,
+      "minified_css": true,
+      "minified_js": true
+    },
+    "core_web_vitals": {
+      "lcp": "needs_improvement",
+      "fid": "good",
+      "cls": "good"
+    },
+    "technical": {
+      "sitemap": true,
+      "robots_txt": true,
+      "https": true,
+      "mobile_friendly": true,
+      "schema_markup": true
+    }
+  }
+} 

@@ -23,6 +23,9 @@ const {
 
 // Verificar si estamos en producción
 const isProd = import.meta.env.PROD;
+
+// Generar URL completa para imágenes compartidas
+const fullImageUrl = image.startsWith('http') ? image : `https://localizacion-industrial.com${image}`;
 ---
 
 <!doctype html>
@@ -41,7 +44,7 @@ const isProd = import.meta.env.PROD;
                 basic: {
                     title: `${title} | Localización Industrial`,
                     type: "website",
-                    image: image,
+                    image: fullImageUrl,
                 },
                 optional: {
                     description: description,
@@ -54,7 +57,7 @@ const isProd = import.meta.env.PROD;
                 site: "@locualizacionindustrial",
                 title: `${title} | Localización Industrial`,
                 description: description,
-                image: image,
+                image: fullImageUrl,
                 imageAlt: "Localización Industrial logo",
             }}
             extend={{

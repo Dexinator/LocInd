@@ -6,7 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import AstroPWA from '@vite-pwa/astro';
 
 export default defineConfig({
-  site: "https://tudominio.com", // Reemplaza con tu dominio real
+  site: "https://localizacion-industrial.com", // URL real del sitio en producción
   integrations: [
     mdx(),
     sitemap(),

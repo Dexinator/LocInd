@@ -1,0 +1,79 @@
+---
+// Componente de breadcrumbs (migas de pan) con Schema.org
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  currentPage: string;
+}
+
+const { items, currentPage } = Astro.props;
+
+// Crear el array de items para Schema.org
+const schemaItems = items.map((item, index) => ({
+  "@type": "ListItem",
+  "position": index + 1,
+  "name": item.name,
+  "item": item.url
+}));
+
+// Añadir la página actual
+schemaItems.push({
+  "@type": "ListItem",
+  "position": items.length + 1,
+  "name": currentPage
+});
+
+// Crear el objeto Schema.org completo
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": schemaItems
+};
+
+// Convertir a string para el script JSON-LD
+const breadcrumbSchemaString = JSON.stringify(breadcrumbSchema);
+---
+
+<nav aria-label="Breadcrumb" class="py-3 text-sm">
+  <ol class="flex flex-wrap items-center">
+    <li class="flex items-center">
+      <a href="/" class="text-brand-blue hover:underline">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        <span class="sr-only">Inicio</span>
+      </a>
+      <span class="mx-2">/</span>
+    </li>
+    
+    {items.map((item, index) => (
+      <li class="flex items-center">
+        <a href={item.url} class="text-text-muted hover:text-brand-blue hover:underline">{item.name}</a>
+        <span class="mx-2">/</span>
+      </li>
+    ))}
+    
+    <li class="text-text-base font-medium">{currentPage}</li>
+  </ol>
+</nav>
+
+{/* Schema.org estructurado para breadcrumbs */}
+<script type="application/ld+json" set:html={breadcrumbSchemaString} />
+
+<!-- 
+EJEMPLO DE USO:
+
+```astro
+<BreadcrumbsExample 
+  items={[
+    { name: "Productos", url: "/productos" },
+    { name: "Categoría", url: "/productos/categoria" }
+  ]} 
+  currentPage="Nombre del Producto"
+/>
+```
+--> 
