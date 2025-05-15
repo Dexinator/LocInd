@@ -105,6 +105,11 @@
       "source": "/productos.html", 
       "destination": "/productos", 
       "permanent": true 
+    },
+    { 
+      "source": "/:path+/index", 
+      "destination": "/:path+", 
+      "permanent": true 
     }
   ]
 } 

@@ -8,8 +8,16 @@ Disallow: /carrito
 Disallow: /checkout
 Disallow: /pago-exitoso
 
+# Páginas importantes a indexar (comentario informativo)
+# Allow: /contacto
+# Allow: /productos
+# Allow: /como-funciona
+# Allow: /casos-exito
+
 # Retrasar el rastreo para evitar sobrecargas
-Crawl-delay: 10
+Crawl-delay: 5
 
 # Sitemap para mejorar el rastreo
-Sitemap: https://localizacion-industrial.com/sitemap-index.xml 
+Sitemap: https://localizacion-industrial.com/sitemap.xml
+Sitemap: https://localizacion-industrial.com/sitemap-index.xml
+Sitemap: https://localizacion-industrial.com/productos-sitemap.xml 

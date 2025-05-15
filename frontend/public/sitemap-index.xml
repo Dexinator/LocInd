@@ -2,5 +2,10 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://localizacion-industrial.com/sitemap.xml</loc>
+    <lastmod>2025-05-12T10:00:00+00:00</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://localizacion-industrial.com/productos-sitemap.xml</loc>
+    <lastmod>2025-05-12T10:00:00+00:00</lastmod>
   </sitemap>
 </sitemapindex> 

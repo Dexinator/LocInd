@@ -31,6 +31,20 @@ const pageData = {
   }
 };
 
+// Enlaces internos para mejorar SEO
+const mainLinks = [
+  { name: "Cómo Funciona", url: "/como-funciona/" },
+  { name: "Productos", url: "/productos/" },
+  { name: "Casos de Éxito", url: "/casos-exito/" },
+  { name: "Contacto", url: "/contacto/" }
+];
+
+const productLinks = [
+  { name: "SafeT-3", url: "/productos/safet-3/" },
+  { name: "SafeO-3", url: "/productos/safeo-3/" },
+  { name: "SafeA-3", url: "/productos/safea-3/" },
+  { name: "SafeV-3", url: "/productos/safev-3/" }
+];
 ---
 
 <BaseLayout title="Inicio" description="Soluciones avanzadas de geolocalización indoor para optimizar procesos industriales, logísticos y de manufactura con precisión y seguridad en tiempo real.">
@@ -87,10 +101,127 @@ const pageData = {
                 quality={80}
              />
              {/* Enlace usa estilos base de global.css */}
-             <a href="/como-funciona" class="font-semibold hover:underline">Saber más -></a>
+             <a href="/como-funciona/" class="font-semibold hover:underline">Saber más -></a>
         </div>
     </section>
 
+    {/* Sección de Productos Destacados - Diseño mejorado */}
+    <section class="py-16 md:py-24">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold font-heading mb-12 text-center text-text-base">Nuestras Soluciones</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Tarjeta de Producto 1 */}
+                <a href="/productos/safet-3/" class="group">
+                    <div class="bg-background border border-border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform group-hover:scale-[1.02]">
+                        <div class="bg-brand-blue/10 p-6 flex items-center justify-center">
+                            <div class="w-16 h-16 text-brand-blue">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-2 text-text-base group-hover:text-brand-blue transition-colors">SafeT-3</h3>
+                            <p class="text-text-muted text-sm">Sistema de geolocalización para seguridad industrial</p>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <span class="text-brand-blue text-sm font-medium flex items-center">
+                                Ver detalles
+                                <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                
+                {/* Tarjeta de Producto 2 */}
+                <a href="/productos/safeo-3/" class="group">
+                    <div class="bg-background border border-border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform group-hover:scale-[1.02]">
+                        <div class="bg-brand-blue/10 p-6 flex items-center justify-center">
+                            <div class="w-16 h-16 text-brand-blue">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-2 text-text-base group-hover:text-brand-blue transition-colors">SafeO-3</h3>
+                            <p class="text-text-muted text-sm">Sistema de optimización de operaciones industriales</p>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <span class="text-brand-blue text-sm font-medium flex items-center">
+                                Ver detalles
+                                <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                
+                {/* Tarjeta de Producto 3 */}
+                <a href="/productos/safea-3/" class="group">
+                    <div class="bg-background border border-border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform group-hover:scale-[1.02]">
+                        <div class="bg-brand-blue/10 p-6 flex items-center justify-center">
+                            <div class="w-16 h-16 text-brand-blue">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-2 text-text-base group-hover:text-brand-blue transition-colors">SafeA-3</h3>
+                            <p class="text-text-muted text-sm">Sistema de análisis avanzado para entornos industriales</p>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <span class="text-brand-blue text-sm font-medium flex items-center">
+                                Ver detalles
+                                <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                
+                {/* Tarjeta de Producto 4 */}
+                <a href="/productos/safev-3/" class="group">
+                    <div class="bg-background border border-border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform group-hover:scale-[1.02]">
+                        <div class="bg-brand-blue/10 p-6 flex items-center justify-center">
+                            <div class="w-16 h-16 text-brand-blue">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold mb-2 text-text-base group-hover:text-brand-blue transition-colors">SafeV-3</h3>
+                            <p class="text-text-muted text-sm">Sistema de visualización de datos en tiempo real</p>
+                        </div>
+                        <div class="px-6 pb-4">
+                            <span class="text-brand-blue text-sm font-medium flex items-center">
+                                Ver detalles
+                                <svg class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="/productos/" class="inline-flex items-center px-6 py-3 border border-brand-blue text-brand-blue bg-transparent hover:bg-brand-blue hover:text-white font-medium rounded-md transition-colors duration-300">
+                    Ver todos nuestros productos
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
 </BaseLayout>
 
 <style>
