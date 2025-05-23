@@ -1,0 +1,316 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
+
+const pageData = {
+  "@id": "https://localizacion-industrial.com/politica-devoluciones/#webpage",
+  url: "https://localizacion-industrial.com/politica-devoluciones/",
+  name: "Política de Devoluciones | Localización Industrial",
+  description: "Política de devoluciones y garantías para productos de geolocalización industrial SafeT-3, SafeO-3, SafeA-3 y SafeV-3.",
+  isPartOf: {
+    "@id": "https://localizacion-industrial.com/#website"
+  }
+};
+---
+
+<BaseLayout 
+  title="Política de Devoluciones" 
+  description="Política de devoluciones y garantías para productos de geolocalización industrial SafeT-3, SafeO-3, SafeA-3 y SafeV-3.">
+
+  <SchemaOrg type="WebPage" data={pageData} />
+
+  <div class="container mx-auto px-4 py-12 max-w-4xl">
+    
+    {/* Header */}
+    <div class="text-center mb-12">
+      <h1 class="text-3xl md:text-4xl font-bold font-heading mb-4 text-text-base">
+        Política de Devoluciones
+      </h1>
+      <p class="text-lg text-text-muted">
+        En Localización Industrial nos comprometemos con la satisfacción total de nuestros clientes
+      </p>
+      <div class="mt-4 text-sm text-text-muted">
+        Última actualización: {new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+      </div>
+    </div>
+
+    {/* Contenido principal */}
+    <div class="bg-background border border-border rounded-lg p-8 md:p-12 shadow-md">
+      
+      {/* Sección 1: Información General */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          1. Información General
+        </h2>
+        <div class="space-y-4 text-text-muted">
+          <p>
+            Localización Industrial se compromete a proporcionar productos de geolocalización industrial 
+            de la más alta calidad. Esta política de devoluciones establece los términos y condiciones 
+            para devoluciones, cambios y garantías de nuestros productos SafeT-3, SafeO-3, SafeA-3 y SafeV-3.
+          </p>
+          <p>
+            Entendemos que la inversión en tecnología industrial requiere confianza, por lo que ofrecemos 
+            políticas flexibles que protegen su inversión.
+          </p>
+        </div>
+      </section>
+
+      {/* Sección 2: Período de Devolución */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          2. Período de Devolución
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-background-alt border border-border rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-brand-blue">Productos Estándar</h3>
+            <p class="text-text-muted mb-3"><strong>30 días</strong> a partir de la fecha de recepción</p>
+            <ul class="list-disc list-inside text-sm text-text-muted space-y-1">
+              <li>SafeT-3 (unidades individuales)</li>
+              <li>SafeO-3 (configuraciones básicas)</li>
+              <li>Accesorios y componentes</li>
+            </ul>
+          </div>
+          <div class="bg-background-alt border border-border rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-brand-blue">Sistemas Personalizados</h3>
+            <p class="text-text-muted mb-3"><strong>45 días</strong> a partir de la instalación completa</p>
+            <ul class="list-disc list-inside text-sm text-text-muted space-y-1">
+              <li>SafeA-3 (sistemas complejos)</li>
+              <li>SafeV-3 (implementaciones vehiculares)</li>
+              <li>Soluciones integradas</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección 3: Condiciones para Devoluciones */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          3. Condiciones para Devoluciones
+        </h2>
+        <div class="space-y-6">
+          
+          <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-green-800 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+              Productos Elegibles para Devolución
+            </h3>
+            <ul class="list-disc list-inside text-sm text-green-700 space-y-1">
+              <li>Productos en su embalaje original sin abrir</li>
+              <li>Equipos que no han sido configurados o instalados</li>
+              <li>Productos con defectos de fabricación</li>
+              <li>Sistemas que no cumplen las especificaciones acordadas</li>
+              <li>Productos dañados durante el envío</li>
+            </ul>
+          </div>
+
+          <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-red-800 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+              Productos NO Elegibles
+            </h3>
+            <ul class="list-disc list-inside text-sm text-red-700 space-y-1">
+              <li>Productos personalizados o configurados específicamente</li>
+              <li>Software descargado o licencias activadas</li>
+              <li>Equipos instalados y puestos en funcionamiento</li>
+              <li>Productos dañados por mal uso o negligencia</li>
+              <li>Sistemas con más de 100 horas de uso operativo</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección 4: Proceso de Devolución */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          4. Proceso de Devolución
+        </h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="text-center">
+            <div class="bg-brand-blue text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+            <h3 class="text-lg font-bold mb-2 text-text-base">Contactar Soporte</h3>
+            <p class="text-sm text-text-muted">
+              Envíe un email a <a href="mailto:devoluciones@localizacion-industrial.com" class="text-brand-blue hover:underline">devoluciones@localizacion-industrial.com</a> 
+              con el número de pedido y motivo de devolución.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="bg-brand-blue text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+            <h3 class="text-lg font-bold mb-2 text-text-base">Autorización RMA</h3>
+            <p class="text-sm text-text-muted">
+              Recibirá un número RMA (Return Merchandise Authorization) y las instrucciones 
+              de envío en un plazo de 24-48 horas.
+            </p>
+          </div>
+          <div class="text-center">
+            <div class="bg-brand-blue text-white rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+            <h3 class="text-lg font-bold mb-2 text-text-base">Envío y Reembolso</h3>
+            <p class="text-sm text-text-muted">
+              Envíe el producto con el número RMA. El reembolso se procesará en 5-10 días 
+              hábiles tras la recepción e inspección.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección 5: Política de Reembolsos */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          5. Política de Reembolsos
+        </h2>
+        <div class="space-y-4">
+          <div class="bg-background-alt border border-border rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-brand-blue">Métodos de Reembolso</h3>
+            <ul class="list-disc list-inside text-text-muted space-y-2">
+              <li><strong>Transferencia bancaria:</strong> Para pagos empresariales (5-7 días hábiles)</li>
+              <li><strong>Método de pago original:</strong> Tarjetas de crédito/débito (5-10 días hábiles)</li>
+              <li><strong>Crédito en cuenta:</strong> Para futuras compras (inmediato)</li>
+            </ul>
+          </div>
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-yellow-800 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+              </svg>
+              Costos de Envío
+            </h3>
+            <ul class="list-disc list-inside text-yellow-700 space-y-1">
+              <li>Los costos de envío de devolución corren por cuenta del cliente, excepto en casos de defectos de fabricación</li>
+              <li>Para productos defectuosos, Localización Industrial cubre todos los costos de envío</li>
+              <li>Se recomienda usar servicio de paquetería con seguro y tracking</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección 6: Garantías */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          6. Garantías de Productos
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-brand-blue">Garantía de Hardware</h3>
+            <div class="bg-background-alt border border-border rounded-lg p-4">
+              <ul class="space-y-2 text-text-muted">
+                <li><strong>SafeT-3:</strong> 2 años de garantía</li>
+                <li><strong>SafeO-3:</strong> 3 años de garantía</li>
+                <li><strong>SafeA-3:</strong> 3 años de garantía</li>
+                <li><strong>SafeV-3:</strong> 2 años de garantía</li>
+                <li><strong>Accesorios:</strong> 1 año de garantía</li>
+              </ul>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-brand-blue">Garantía de Software</h3>
+            <div class="bg-background-alt border border-border rounded-lg p-4">
+              <ul class="space-y-2 text-text-muted">
+                <li><strong>Actualizaciones:</strong> Gratuitas por 1 año</li>
+                <li><strong>Soporte técnico:</strong> 90 días incluidos</li>
+                <li><strong>Configuración:</strong> 30 días de ajustes</li>
+                <li><strong>Capacitación:</strong> Sesión inicial incluida</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección 7: Excepciones y Casos Especiales */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          7. Excepciones y Casos Especiales
+        </h2>
+        <div class="space-y-6">
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-blue-800">Clientes Empresariales</h3>
+            <p class="text-blue-700 mb-3">
+              Para órdenes superiores a $50,000 USD o contratos empresariales, se aplicarán términos especiales:
+            </p>
+            <ul class="list-disc list-inside text-blue-700 space-y-1">
+              <li>Período de devolución extendido hasta 60 días</li>
+              <li>Período de prueba piloto de 15 días sin costo</li>
+              <li>Soporte dedicado durante la implementación</li>
+              <li>Términos de pago flexibles</li>
+            </ul>
+          </div>
+          
+          <div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-3 text-purple-800">Fuerza Mayor</h3>
+            <p class="text-purple-700">
+              En casos de eventos de fuerza mayor (desastres naturales, pandemias, etc.), 
+              Localización Industrial evaluará cada caso individualmente y podrá extender 
+              los períodos de devolución y ofrecer términos especiales de apoyo a nuestros clientes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Sección 8: Información de Contacto */}
+      <section class="mb-10">
+        <h2 class="text-2xl font-bold font-heading mb-6 text-text-base border-b border-border pb-2">
+          8. Información de Contacto
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-background-alt border border-border rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-4 text-brand-blue">Departamento de Devoluciones</h3>
+            <div class="space-y-3 text-text-muted">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3 text-brand-blue" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+                </svg>
+                <span>devoluciones@localizacion-industrial.com</span>
+              </div>
+              <div class="flex items-center">
+                <svg class="w-5 h-5 mr-3 text-brand-blue" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                </svg>
+                <span>+52 55 1234 5678</span>
+              </div>
+              <div class="text-sm">
+                <strong>Horarios:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM (GMT-6)
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-background-alt border border-border rounded-lg p-6">
+            <h3 class="text-lg font-bold mb-4 text-brand-blue">Dirección para Devoluciones</h3>
+            <div class="text-text-muted space-y-2">
+              <p><strong>Localización Industrial S.A. de C.V.</strong></p>
+              <p>Departamento de Devoluciones</p>
+              <p>Av. Tecnológico 123, Piso 8</p>
+              <p>Col. Innovación Industrial</p>
+              <p>Ciudad de México, CDMX 01234</p>
+              <p>México</p>
+              <div class="mt-3 text-sm bg-yellow-100 border border-yellow-300 rounded p-2">
+                <strong>Importante:</strong> Incluya siempre el número RMA en el paquete
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nota final */}
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 text-center">
+        <p class="text-text-muted">
+          Esta política de devoluciones está sujeta a cambios. La versión más actual estará siempre disponible en nuestro sitio web. 
+          Para preguntas específicas, no dude en contactar a nuestro equipo de atención al cliente.
+        </p>
+        <div class="mt-4">
+          <a href="/contacto/" class="inline-flex items-center px-6 py-3 bg-brand-blue text-white rounded-lg hover:bg-brand-blue/90 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
+            </svg>
+            Contactar Soporte
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</BaseLayout> 
