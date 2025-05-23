@@ -110,6 +110,28 @@
       "source": "/:path+/index", 
       "destination": "/:path+", 
       "permanent": true 
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.localizacion-industrial.com"
+        }
+      ],
+      "destination": "https://localizacion-industrial.com/",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.localizacion-industrial.com"
+        }
+      ],
+      "destination": "https://localizacion-industrial.com/$1",
+      "permanent": true
     }
   ]
 } 
