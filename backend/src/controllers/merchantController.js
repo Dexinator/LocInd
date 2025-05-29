@@ -57,8 +57,11 @@ class MerchantController {
    */
   async loadProducts() {
     const products = [];
+    
+    // En Heroku, los archivos están en la raíz del proyecto
     const productsDir = path.join(__dirname, '../../../frontend/src/content/products');
     
+    // Si no existe (como en Heroku), usar datos hardcodeados temporalmente
     try {
       const files = await fs.readdir(productsDir);
       
@@ -72,10 +75,76 @@ class MerchantController {
         }
       }
     } catch (error) {
-      console.error('Error cargando productos:', error);
+      console.log('No se pueden cargar archivos MDX, usando datos hardcodeados:', error.message);
+      // Productos hardcodeados para Heroku mientras no tengamos acceso a los archivos
+      return this.getHardcodedProducts();
     }
     
     return products;
+  }
+
+  /**
+   * Productos hardcodeados para uso en Heroku
+   */
+  getHardcodedProducts() {
+    return [
+      {
+        id: 'SAFELOC ANCHOR SAFEA-3',
+        title: 'Ancla Safe A-3',
+        description: 'Dispositivo ancla base de localización en espacios industriales para sistema de seguridad Safeloc. Funciona como receptor de señales dentro y fuera de estructuras.',
+        image_filename: 'SAFEA-3.webp',
+        availability: 'in stock',
+        price: '25,080 MXN',
+        brand: 'Safeloc',
+        condition: 'new',
+        product_type: 'Hardware > Dispositivos de Rastreo',
+        custom_label_0: 'UWB Tracker',
+        custom_label_1: 'Industria 4.0',
+        custom_label_2: 'Smart Manufacturing'
+      },
+      {
+        id: 'SAFELOC OBJECT SAFEO-3',
+        title: 'Objeto Safe O-3',
+        description: 'Dispositivo de localización compacto para objetos y personas en entornos industriales. Sistema de rastreo UWB de alta precisión.',
+        image_filename: 'SAFEO-3.webp',
+        availability: 'in stock',
+        price: '3,960 MXN',
+        brand: 'Safeloc',
+        condition: 'new',
+        product_type: 'Hardware > Dispositivos de Rastreo',
+        custom_label_0: 'UWB Tracker',
+        custom_label_1: 'Industria 4.0',
+        custom_label_2: 'Smart Manufacturing'
+      },
+      {
+        id: 'SAFELOC TAG SAFET-3',
+        title: 'Tag Safe T-3',
+        description: 'Tag de localización personal para trabajadores en entornos industriales. Dispositivo wearable con tecnología UWB.',
+        image_filename: 'SAFET-3.webp',
+        availability: 'in stock',
+        price: '1,980 MXN',
+        brand: 'Safeloc',
+        condition: 'new',
+        product_type: 'Hardware > Dispositivos de Rastreo',
+        custom_label_0: 'UWB Tracker',
+        custom_label_1: 'Industria 4.0',
+        custom_label_2: 'Smart Manufacturing'
+      },
+      {
+        id: 'SAFELOC SOFTWARE SAFES-3',
+        title: 'Software Safe S-3',
+        description: 'Plataforma de software para gestión y monitoreo de sistemas de localización industrial Safeloc.',
+        image_filename: 'SAFES-3.webp',
+        availability: 'in stock',
+        price: 'Consultar',
+        brand: 'Safeloc',
+        condition: 'new',
+        product_type: 'Software > Localización',
+        custom_label_0: 'Software',
+        custom_label_1: 'Industria 4.0',
+        custom_label_2: 'Smart Manufacturing'
+      }
+    ].map(product => this.transformProductForGoogle(product));
   }
 
   /**
@@ -242,6 +311,49 @@ class MerchantController {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  /**
+   * Convierte texto a slug para URLs
+   */
+  slugify(text) {
+    return text
+      .toLowerCase()
+      .replace(/[áéíóúñ]/g, m => ({ á: 'a', é: 'e', í: 'i', ó: 'o', ú: 'u', ñ: 'n' }[m]))
+      .replace(/[^a-z0-9]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '');
+  }
+
+  /**
+   * Parsea el precio al formato de Google Merchant
+   */
+  parsePrice(price) {
+    if (price === 'Consultar') {
+      return '0.00 MXN'; // Precio 0 para productos de consulta
+    }
+    
+    // Extraer número y formatear
+    const priceMatch = price.match(/[\d,]+/);
+    if (priceMatch) {
+      const cleanPrice = priceMatch[0].replace(/,/g, '');
+      return `${cleanPrice}.00 MXN`;
+    }
+    
+    return '0.00 MXN';
+  }
+
+  /**
+   * Extrae el peso de las especificaciones
+   */
+  extractWeight(specs) {
+    if (!specs || !Array.isArray(specs)) return '1 kg';
+    
+    const weightSpec = specs.find(spec => 
+      spec.name && spec.name.toLowerCase().includes('peso')
+    );
+    
+    return weightSpec ? weightSpec.value : '1 kg';
   }
 
   /**

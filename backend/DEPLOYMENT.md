@@ -22,7 +22,7 @@ heroku create locind-backend-api
 
 # Configurar variables de entorno
 heroku config:set NODE_ENV=production
-heroku config:set FRONTEND_URL=https://tu-dominio.com
+heroku config:set FRONTEND_URL=https://localizacion-industrial.com
 heroku config:set GOOGLE_MERCHANT_FEED_TITLE="LocInd - Productos Industriales Safeloc"
 heroku config:set GOOGLE_MERCHANT_FEED_DESCRIPTION="Catálogo de productos de localización industrial"
 
