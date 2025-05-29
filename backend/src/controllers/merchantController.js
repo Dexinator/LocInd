@@ -401,7 +401,7 @@ class MerchantController {
         }
 
         // Datos faltantes
-        if (!product.gtin) stats.missing_data.gtin++;
+        if (!product.gtin || product.gtin.startsWith('TEMP')) stats.missing_data.gtin++;
         if (!product.image_link) stats.missing_data.images++;
       });
 

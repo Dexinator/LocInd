@@ -7,20 +7,20 @@ const merchantController = require('../controllers/merchantController');
  * @desc Genera el feed XML para Google Merchant Center
  * @access Public
  */
-router.get('/feed.xml', merchantController.generateXMLFeed);
+router.get('/feed.xml', merchantController.generateXMLFeed.bind(merchantController));
 
 /**
  * @route GET /api/merchant/feed.txt
  * @desc Genera el feed TXT (TSV) para Google Merchant Center
  * @access Public
  */
-router.get('/feed.txt', merchantController.generateTextFeed);
+router.get('/feed.txt', merchantController.generateTextFeed.bind(merchantController));
 
 /**
  * @route GET /api/merchant/stats
  * @desc Obtiene estadísticas del catálogo de productos
  * @access Public
  */
-router.get('/stats', merchantController.getFeedStats);
+router.get('/stats', merchantController.getFeedStats.bind(merchantController));
 
 module.exports = router; 
