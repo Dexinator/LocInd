@@ -7,54 +7,54 @@ const BACKEND_URL = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:300
 
 <BaseLayout title="Dashboard Google Merchant" description="Panel de administración para monitoreo de Google Merchant Center">
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Dashboard Google Merchant Center</h1>
+    <h1 class="text-3xl font-bold mb-8 text-text-base">Dashboard Google Merchant Center</h1>
     
     <!-- Estadísticas del Feed -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold mb-2">Total de Productos</h3>
-        <p class="text-3xl font-bold text-blue-600" id="total-products">-</p>
+      <div class="bg-background border border-border rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-2 text-text-base">Total de Productos</h3>
+        <p class="text-3xl font-bold text-brand-blue" id="total-products">-</p>
       </div>
       
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold mb-2">Productos con Errores</h3>
-        <p class="text-3xl font-bold text-red-600" id="error-products">-</p>
+      <div class="bg-background border border-border rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-2 text-text-base">Productos con Errores</h3>
+        <p class="text-3xl font-bold text-error" id="error-products">-</p>
       </div>
       
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold mb-2">Última Actualización</h3>
-        <p class="text-sm text-gray-600" id="last-update">-</p>
+      <div class="bg-background border border-border rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-2 text-text-base">Última Actualización</h3>
+        <p class="text-sm text-text-muted" id="last-update">-</p>
       </div>
     </div>
 
     <!-- Acciones Rápidas -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-      <h2 class="text-xl font-semibold mb-4">Acciones Rápidas</h2>
+    <div class="bg-background border border-border rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-text-base">Acciones Rápidas</h2>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <button 
-          onclick="window.open('{{BACKEND_URL}}/api/merchant/feed.xml', '_blank')"
-          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onclick="window.open(`${BACKEND_URL}/api/merchant/feed.xml`, '_blank')"
+          class="bg-brand-blue hover:bg-blue-industrial-600 text-white font-bold py-2 px-4 rounded transition-colors"
         >
           Ver Feed XML
         </button>
         
         <button 
-          onclick="window.open('{{BACKEND_URL}}/api/merchant/feed.txt', '_blank')"
-          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          onclick="window.open(`${BACKEND_URL}/api/merchant/feed.txt`, '_blank')"
+          class="bg-success hover:bg-success/90 text-white font-bold py-2 px-4 rounded transition-colors"
         >
           Ver Feed TXT
         </button>
         
         <button 
           onclick="refreshStats()"
-          class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-warning hover:bg-warning/90 text-white font-bold py-2 px-4 rounded transition-colors"
         >
           Actualizar Stats
         </button>
         
         <button 
           onclick="downloadFeed()"
-          class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+          class="bg-brand-purple hover:bg-purple-deep-600 text-white font-bold py-2 px-4 rounded transition-colors"
         >
           Descargar Feed
         </button>
@@ -64,73 +64,73 @@ const BACKEND_URL = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:300
     <!-- Estadísticas Detalladas -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
       <!-- Disponibilidad -->
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold mb-4">Productos por Disponibilidad</h3>
+      <div class="bg-background border border-border rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-4 text-text-base">Productos por Disponibilidad</h3>
         <div id="availability-chart" class="h-64">
           <canvas id="availabilityCanvas"></canvas>
         </div>
       </div>
 
       <!-- Rango de Precios -->
-      <div class="bg-white rounded-lg shadow-md p-6">
-        <h3 class="text-lg font-semibold mb-4">Rango de Precios</h3>
+      <div class="bg-background border border-border rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-4 text-text-base">Rango de Precios</h3>
         <div id="price-info">
-          <p>Precio mínimo: <span id="min-price" class="font-bold">-</span></p>
-          <p>Precio máximo: <span id="max-price" class="font-bold">-</span></p>
-          <p>Productos de consulta: <span id="consultation-products" class="font-bold">-</span></p>
+          <p class="text-text-base">Precio mínimo: <span id="min-price" class="font-bold">-</span></p>
+          <p class="text-text-base">Precio máximo: <span id="max-price" class="font-bold">-</span></p>
+          <p class="text-text-base">Productos de consulta: <span id="consultation-products" class="font-bold">-</span></p>
         </div>
       </div>
     </div>
 
     <!-- Datos Faltantes -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-      <h2 class="text-xl font-semibold mb-4">Datos Faltantes</h2>
+    <div class="bg-background border border-border rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-text-base">Datos Faltantes</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h4 class="font-semibold mb-2">Productos sin GTIN:</h4>
-          <p class="text-2xl font-bold text-red-600" id="missing-gtin">-</p>
+          <h4 class="font-semibold mb-2 text-text-base">Productos sin GTIN:</h4>
+          <p class="text-2xl font-bold text-error" id="missing-gtin">-</p>
         </div>
         <div>
-          <h4 class="font-semibold mb-2">Productos sin Imágenes:</h4>
-          <p class="text-2xl font-bold text-red-600" id="missing-images">-</p>
+          <h4 class="font-semibold mb-2 text-text-base">Productos sin Imágenes:</h4>
+          <p class="text-2xl font-bold text-error" id="missing-images">-</p>
         </div>
       </div>
     </div>
 
     <!-- Enlaces de Configuración -->
-    <div class="bg-gray-50 rounded-lg p-6">
-      <h2 class="text-xl font-semibold mb-4">Enlaces de Configuración</h2>
+    <div class="bg-background-alt border border-border rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4 text-text-base">Enlaces de Configuración</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <h4 class="font-semibold mb-2">Google Merchant Center:</h4>
-          <a href="https://merchants.google.com" target="_blank" class="text-blue-600 hover:underline">
+          <h4 class="font-semibold mb-2 text-text-base">Google Merchant Center:</h4>
+          <a href="https://merchants.google.com" target="_blank" class="text-brand-blue hover:text-brand-sky hover:underline transition-colors">
             Ir a Merchant Center →
           </a>
         </div>
         <div>
-          <h4 class="font-semibold mb-2">URL del Feed XML:</h4>
-          <code class="bg-gray-200 p-2 rounded text-sm block">
-            {{BACKEND_URL}}/api/merchant/feed.xml
+          <h4 class="font-semibold mb-2 text-text-base">URL del Feed XML:</h4>
+          <code class="bg-background-alt border border-border p-2 rounded text-sm block text-text-base">
+            {BACKEND_URL}/api/merchant/feed.xml
           </code>
         </div>
       </div>
     </div>
 
     <!-- Status de Validación -->
-    <div class="mt-8 bg-white rounded-lg shadow-md p-6">
-      <h2 class="text-xl font-semibold mb-4">Estado de Validación</h2>
+    <div class="mt-8 bg-background border border-border rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold mb-4 text-text-base">Estado de Validación</h2>
       <div id="validation-status" class="flex flex-col gap-2">
         <div class="flex items-center">
-          <span id="feed-status-icon" class="w-4 h-4 rounded-full bg-gray-400 mr-3"></span>
-          <span>Feed accesible: <span id="feed-status">Verificando...</span></span>
+          <span id="feed-status-icon" class="w-4 h-4 rounded-full bg-text-muted mr-3"></span>
+          <span class="text-text-base">Feed accesible: <span id="feed-status">Verificando...</span></span>
         </div>
         <div class="flex items-center">
-          <span id="products-status-icon" class="w-4 h-4 rounded-full bg-gray-400 mr-3"></span>
-          <span>Productos válidos: <span id="products-status">Verificando...</span></span>
+          <span id="products-status-icon" class="w-4 h-4 rounded-full bg-text-muted mr-3"></span>
+          <span class="text-text-base">Productos válidos: <span id="products-status">Verificando...</span></span>
         </div>
         <div class="flex items-center">
-          <span id="compliance-status-icon" class="w-4 h-4 rounded-full bg-gray-400 mr-3"></span>
-          <span>Compliance: <span id="compliance-status">Verificando...</span></span>
+          <span id="compliance-status-icon" class="w-4 h-4 rounded-full bg-text-muted mr-3"></span>
+          <span class="text-text-base">Compliance: <span id="compliance-status">Verificando...</span></span>
         </div>
       </div>
     </div>
@@ -255,12 +255,12 @@ const BACKEND_URL = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:300
     
     if (isValid) {
       statusElement.textContent = 'OK';
-      statusElement.className = 'text-green-600 font-semibold';
-      iconElement.className = 'w-4 h-4 rounded-full bg-green-500 mr-3';
+      statusElement.className = 'text-success font-semibold';
+      iconElement.className = 'w-4 h-4 rounded-full bg-success mr-3';
     } else {
       statusElement.textContent = 'Error';
-      statusElement.className = 'text-red-600 font-semibold';
-      iconElement.className = 'w-4 h-4 rounded-full bg-red-500 mr-3';
+      statusElement.className = 'text-error font-semibold';
+      iconElement.className = 'w-4 h-4 rounded-full bg-error mr-3';
     }
   }
 
@@ -306,7 +306,7 @@ const BACKEND_URL = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:300
   function showNotification(message, type) {
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 p-4 rounded-md text-white z-50 ${
-      type === 'success' ? 'bg-green-500' : 'bg-red-500'
+      type === 'success' ? 'bg-success' : 'bg-error'
     }`;
     notification.textContent = message;
     
@@ -322,25 +322,5 @@ const BACKEND_URL = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:300
   #availabilityCanvas {
     width: 100%;
     height: 200px;
-  }
-  
-  .validation-item {
-    @apply flex items-center gap-3 py-2;
-  }
-  
-  .status-icon {
-    @apply w-4 h-4 rounded-full;
-  }
-  
-  .status-ok {
-    @apply bg-green-500;
-  }
-  
-  .status-error {
-    @apply bg-red-500;
-  }
-  
-  .status-warning {
-    @apply bg-yellow-500;
   }
 </style> 
