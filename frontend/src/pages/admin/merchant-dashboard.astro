@@ -1,0 +1,346 @@
+---
+// Dashboard de Administración para Google Merchant Center
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const BACKEND_URL = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:3000';
+---
+
+<BaseLayout title="Dashboard Google Merchant" description="Panel de administración para monitoreo de Google Merchant Center">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Dashboard Google Merchant Center</h1>
+    
+    <!-- Estadísticas del Feed -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-2">Total de Productos</h3>
+        <p class="text-3xl font-bold text-blue-600" id="total-products">-</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-2">Productos con Errores</h3>
+        <p class="text-3xl font-bold text-red-600" id="error-products">-</p>
+      </div>
+      
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-2">Última Actualización</h3>
+        <p class="text-sm text-gray-600" id="last-update">-</p>
+      </div>
+    </div>
+
+    <!-- Acciones Rápidas -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Acciones Rápidas</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <button 
+          onclick="window.open('{{BACKEND_URL}}/api/merchant/feed.xml', '_blank')"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Ver Feed XML
+        </button>
+        
+        <button 
+          onclick="window.open('{{BACKEND_URL}}/api/merchant/feed.txt', '_blank')"
+          class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Ver Feed TXT
+        </button>
+        
+        <button 
+          onclick="refreshStats()"
+          class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Actualizar Stats
+        </button>
+        
+        <button 
+          onclick="downloadFeed()"
+          class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Descargar Feed
+        </button>
+      </div>
+    </div>
+
+    <!-- Estadísticas Detalladas -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Disponibilidad -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-4">Productos por Disponibilidad</h3>
+        <div id="availability-chart" class="h-64">
+          <canvas id="availabilityCanvas"></canvas>
+        </div>
+      </div>
+
+      <!-- Rango de Precios -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-lg font-semibold mb-4">Rango de Precios</h3>
+        <div id="price-info">
+          <p>Precio mínimo: <span id="min-price" class="font-bold">-</span></p>
+          <p>Precio máximo: <span id="max-price" class="font-bold">-</span></p>
+          <p>Productos de consulta: <span id="consultation-products" class="font-bold">-</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Datos Faltantes -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Datos Faltantes</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold mb-2">Productos sin GTIN:</h4>
+          <p class="text-2xl font-bold text-red-600" id="missing-gtin">-</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-2">Productos sin Imágenes:</h4>
+          <p class="text-2xl font-bold text-red-600" id="missing-images">-</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enlaces de Configuración -->
+    <div class="bg-gray-50 rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Enlaces de Configuración</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <h4 class="font-semibold mb-2">Google Merchant Center:</h4>
+          <a href="https://merchants.google.com" target="_blank" class="text-blue-600 hover:underline">
+            Ir a Merchant Center →
+          </a>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-2">URL del Feed XML:</h4>
+          <code class="bg-gray-200 p-2 rounded text-sm block">
+            {{BACKEND_URL}}/api/merchant/feed.xml
+          </code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status de Validación -->
+    <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold mb-4">Estado de Validación</h2>
+      <div id="validation-status" class="space-y-2">
+        <div class="flex items-center">
+          <span id="feed-status-icon" class="w-4 h-4 rounded-full bg-gray-400 mr-3"></span>
+          <span>Feed accesible: <span id="feed-status">Verificando...</span></span>
+        </div>
+        <div class="flex items-center">
+          <span id="products-status-icon" class="w-4 h-4 rounded-full bg-gray-400 mr-3"></span>
+          <span>Productos válidos: <span id="products-status">Verificando...</span></span>
+        </div>
+        <div class="flex items-center">
+          <span id="compliance-status-icon" class="w-4 h-4 rounded-full bg-gray-400 mr-3"></span>
+          <span>Compliance: <span id="compliance-status">Verificando...</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script define:vars={{ BACKEND_URL }}>
+  // Variables globales
+  let currentStats = null;
+
+  // Inicializar dashboard
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando dashboard...');
+    loadStats();
+    validateFeeds();
+  });
+
+  // Cargar estadísticas
+  async function loadStats() {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/merchant/stats`);
+      const stats = await response.json();
+      currentStats = stats;
+      
+      updateStatsDisplay(stats);
+      updateCharts(stats);
+      
+    } catch (error) {
+      console.error('Error cargando estadísticas:', error);
+      showError('Error al cargar estadísticas del feed');
+    }
+  }
+
+  // Actualizar display de estadísticas
+  function updateStatsDisplay(stats) {
+    document.getElementById('total-products').textContent = stats.total_products || '0';
+    document.getElementById('error-products').textContent = 
+      (stats.missing_data.gtin + stats.missing_data.images) || '0';
+    document.getElementById('last-update').textContent = new Date().toLocaleString('es-MX');
+
+    // Rango de precios
+    document.getElementById('min-price').textContent = 
+      stats.price_range.min ? `$${stats.price_range.min.toLocaleString()} MXN` : 'N/A';
+    document.getElementById('max-price').textContent = 
+      stats.price_range.max ? `$${stats.price_range.max.toLocaleString()} MXN` : 'N/A';
+    document.getElementById('consultation-products').textContent = 
+      stats.price_range.has_consultation ? 'Sí' : 'No';
+
+    // Datos faltantes
+    document.getElementById('missing-gtin').textContent = stats.missing_data.gtin || '0';
+    document.getElementById('missing-images').textContent = stats.missing_data.images || '0';
+  }
+
+  // Actualizar gráficos
+  function updateCharts(stats) {
+    // Gráfico de disponibilidad
+    const canvas = document.getElementById('availabilityCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    if (stats.by_availability) {
+      drawPieChart(ctx, stats.by_availability);
+    }
+  }
+
+  // Dibujar gráfico de pastel simple
+  function drawPieChart(ctx, data) {
+    const canvas = ctx.canvas;
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = Math.min(centerX, centerY) - 20;
+    
+    const total = Object.values(data).reduce((sum, val) => sum + val, 0);
+    
+    const colors = {
+      'in_stock': '#10B981',
+      'out_of_stock': '#EF4444',
+      'preorder': '#F59E0B'
+    };
+    
+    let startAngle = 0;
+    
+    Object.entries(data).forEach(([key, value]) => {
+      const sliceAngle = (value / total) * 2 * Math.PI;
+      
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+      ctx.closePath();
+      ctx.fillStyle = colors[key] || '#6B7280';
+      ctx.fill();
+      
+      startAngle += sliceAngle;
+    });
+  }
+
+  // Validar feeds
+  async function validateFeeds() {
+    try {
+      // Validar feed XML
+      const xmlResponse = await fetch(`${BACKEND_URL}/api/merchant/feed.xml`);
+      updateValidationStatus('feed-status', xmlResponse.ok);
+      
+      // Validar productos
+      const statsResponse = await fetch(`${BACKEND_URL}/api/merchant/stats`);
+      const stats = await statsResponse.json();
+      const hasValidProducts = stats.total_products > 0;
+      updateValidationStatus('products-status', hasValidProducts);
+      
+      // Verificar compliance básico
+      const complianceOk = stats.missing_data.gtin === 0 && stats.missing_data.images === 0;
+      updateValidationStatus('compliance-status', complianceOk);
+      
+    } catch (error) {
+      console.error('Error validando feeds:', error);
+    }
+  }
+
+  // Actualizar estado de validación
+  function updateValidationStatus(elementId, isValid) {
+    const statusElement = document.getElementById(elementId);
+    const iconElement = document.getElementById(elementId + '-icon');
+    
+    if (isValid) {
+      statusElement.textContent = 'OK';
+      statusElement.className = 'text-green-600 font-semibold';
+      iconElement.className = 'w-4 h-4 rounded-full bg-green-500 mr-3';
+    } else {
+      statusElement.textContent = 'Error';
+      statusElement.className = 'text-red-600 font-semibold';
+      iconElement.className = 'w-4 h-4 rounded-full bg-red-500 mr-3';
+    }
+  }
+
+  // Actualizar estadísticas
+  function refreshStats() {
+    loadStats();
+    validateFeeds();
+    showSuccess('Estadísticas actualizadas');
+  }
+
+  // Descargar feed
+  async function downloadFeed() {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/merchant/feed.xml`);
+      const xmlContent = await response.text();
+      
+      const blob = new Blob([xmlContent], { type: 'application/xml' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `locind-products-${new Date().toISOString().split('T')[0]}.xml`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      showSuccess('Feed descargado exitosamente');
+    } catch (error) {
+      console.error('Error descargando feed:', error);
+      showError('Error al descargar el feed');
+    }
+  }
+
+  // Mostrar mensajes
+  function showSuccess(message) {
+    showNotification(message, 'success');
+  }
+
+  function showError(message) {
+    showNotification(message, 'error');
+  }
+
+  function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 p-4 rounded-md text-white z-50 ${
+      type === 'success' ? 'bg-green-500' : 'bg-red-500'
+    }`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 3000);
+  }
+</script>
+
+<style>
+  #availabilityCanvas {
+    width: 100%;
+    height: 200px;
+  }
+  
+  .validation-item {
+    @apply flex items-center space-x-3 py-2;
+  }
+  
+  .status-icon {
+    @apply w-4 h-4 rounded-full;
+  }
+  
+  .status-ok {
+    @apply bg-green-500;
+  }
+  
+  .status-error {
+    @apply bg-red-500;
+  }
+  
+  .status-warning {
+    @apply bg-yellow-500;
+  }
+</style> 

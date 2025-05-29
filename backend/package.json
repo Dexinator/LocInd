@@ -1,12 +1,13 @@
 {
   "name": "locind-backend",
   "version": "1.0.0",
-  "description": "Backend para procesamiento de pagos con Mercado Pago",
+  "description": "Backend para procesamiento de pagos con Mercado Pago y Google Merchant Center",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "echo 'Backend deployed successfully'"
   },
   "engines": {
     "node": "18.x"

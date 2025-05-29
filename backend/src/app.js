@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const paymentRoutes = require('./routes/paymentRoutes');
+const merchantRoutes = require('./routes/merchantRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -45,6 +46,7 @@ app.use(morgan('dev'));
 
 // Routes
 app.use('/api/payment', paymentRoutes);
+app.use('/api/merchant', merchantRoutes);
 
 // Webhook route for MercadoPago notifications
 app.post('/api/webhook', (req, res) => {
