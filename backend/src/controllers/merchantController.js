@@ -89,7 +89,7 @@ class MerchantController {
   getHardcodedProducts() {
     return [
       {
-        id: 'SAFELOC ANCHOR SAFEA-3',
+        id: 'SAFEA-3',
         title: 'Ancla Safe A-3',
         description: 'Dispositivo ancla base de localización en espacios industriales para sistema de seguridad Safeloc. Funciona como receptor de señales dentro y fuera de estructuras.',
         image_filename: 'SAFEA-3.webp',
@@ -103,7 +103,7 @@ class MerchantController {
         custom_label_2: 'Smart Manufacturing'
       },
       {
-        id: 'SAFELOC OBJECT SAFEO-3',
+        id: 'SAFEO-3',
         title: 'Objeto Safe O-3',
         description: 'Dispositivo de localización compacto para objetos y personas en entornos industriales. Sistema de rastreo UWB de alta precisión.',
         image_filename: 'SAFEO-3.webp',
@@ -117,7 +117,7 @@ class MerchantController {
         custom_label_2: 'Smart Manufacturing'
       },
       {
-        id: 'SAFELOC TAG SAFET-3',
+        id: 'SAFET-3',
         title: 'Tag Safe T-3',
         description: 'Tag de localización personal para trabajadores en entornos industriales. Dispositivo wearable con tecnología UWB.',
         image_filename: 'SAFET-3.webp',
@@ -131,16 +131,16 @@ class MerchantController {
         custom_label_2: 'Smart Manufacturing'
       },
       {
-        id: 'SAFELOC SOFTWARE SAFES-3',
-        title: 'Software Safe S-3',
-        description: 'Plataforma de software para gestión y monitoreo de sistemas de localización industrial Safeloc.',
-        image_filename: 'SAFES-3.webp',
+        id: 'SAFEV-3',
+        title: 'Safe V-3',
+        description: 'Dispositivo versátil de localización en tiempo real. Se puede utilizar como localizador mismo y también como detector de otros localizadores. Ideal para vehículos y maquinaria industrial en contacto con trabajadores y otros activos. El sistema es de alta precisión, robusto y resistente a interferencia del medio.',
+        image_filename: 'SAFEV-3.webp',
         availability: 'in stock',
         price: 'Consultar',
         brand: 'Safeloc',
         condition: 'new',
-        product_type: 'Software > Localización',
-        custom_label_0: 'Software',
+        product_type: 'Hardware > Dispositivos de Rastreo',
+        custom_label_0: 'UWB Tracker',
         custom_label_1: 'Industria 4.0',
         custom_label_2: 'Smart Manufacturing'
       }
@@ -220,7 +220,7 @@ class MerchantController {
       gtin: product.gtin || `TEMP${Date.now()}${Math.random().toString(36).substr(2, 5)}`.toUpperCase(),
       
       // Categoría de Google (mapear desde product_type)
-      google_product_category: this.mapToGoogleCategory(product.product_type),
+      google_product_category: '6544',
       
       // Atributos personalizados
       custom_label_0: product.custom_label_0 || '',
