@@ -9,25 +9,25 @@ const path = require('path');
 const PRODUCT_UPDATES = {
   'SAFEA-3.mdx': {
     gtin: '8437021459631', // Ejemplo - reemplazar con GTIN real
-    google_product_category: 'Electronics > GPS & Navigation > GPS Tracking Devices',
+    google_product_category: '6544',
     shipping_weight: '2.5 kg',
     product_dimension: '150x100x50 mm'
   },
   'SAFEO-3.mdx': {
     gtin: '8437021459648', // Ejemplo - reemplazar con GTIN real
-    google_product_category: 'Electronics > GPS & Navigation > GPS Tracking Devices',
+    google_product_category: '6544',
     shipping_weight: '0.2 kg',
     product_dimension: '50x30x15 mm'
   },
   'SAFET-3.mdx': {
     gtin: '8437021459655', // Ejemplo - reemplazar con GTIN real
-    google_product_category: 'Electronics > GPS & Navigation > GPS Tracking Devices',
+    google_product_category: '6544',
     shipping_weight: '0.15 kg',
     product_dimension: '40x25x12 mm'
   },
   'SAFEV-3.mdx': {
     gtin: '8437021459662', // Ejemplo - reemplazar con GTIN real
-    google_product_category: 'Electronics > GPS & Navigation > GPS Tracking Devices',
+    google_product_category: '6544',
     shipping_weight: '1.8 kg',
     product_dimension: '120x80x40 mm'
   }
