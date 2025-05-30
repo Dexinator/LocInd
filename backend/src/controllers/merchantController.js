@@ -208,6 +208,8 @@ class MerchantController {
       description: product.description,
       link: `${baseUrl}/productos/${this.slugify(product.id)}`,
       image_link: `${baseUrl}/images/products/${product.image_filename}`,
+      additional_image_links: product.additional_images ? 
+        product.additional_images.map(img => `${baseUrl}/images/products/${img}`) : [],
       availability: product.availability === 'in stock' ? 'in_stock' : 'out_of_stock',
       price: this.parsePrice(product.price),
       brand: product.brand,
@@ -250,7 +252,7 @@ class MerchantController {
       <g:description>${this.escapeXML(product.description)}</g:description>
       <g:link>${this.escapeXML(product.link)}</g:link>
       <g:image_link>${this.escapeXML(product.image_link)}</g:image_link>
-      ${product.additional_image_links.map(img => 
+      ${(product.additional_image_links || []).map(img => 
         `<g:additional_image_link>${this.escapeXML(img)}</g:additional_image_link>`
       ).join('\n      ')}
       <g:availability>${product.availability}</g:availability>
